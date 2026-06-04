@@ -1,0 +1,116 @@
+import 'dart:convert';
+import 'package:graduation_project/features/profile/data/models/user_model.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+class ProfileRepository {
+  static const _baseUrl = 'http://ecommercetest2.runasp.net/api/ManageUser';
+
+  Future<String?> _getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
+  String? _extractUserIdFromToken(String token) {
+    try {
+      final parts = token.split('.');
+      if (parts.length != 3) return null;
+      String payload = parts[1];
+      switch (payload.length % 4) {
+        case 2:
+          payload += '==';
+          break;
+        case 3:
+          payload += '=';
+          break;
+      }
+      final decoded = utf8.decode(base64Url.decode(payload));
+      final Map<String, dynamic> claims = jsonDecode(decoded);
+      return claims['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<UserModel> getCurrentUser() async {
+    final token = await _getToken();
+    if (token == null) throw Exception('No token found');
+
+    final userId = _extractUserIdFromToken(token);
+
+    final response = await http.get(
+      Uri.parse('$_baseUrl/GetAllUsers'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List users = jsonDecode(response.body);
+      final userData = users.firstWhere(
+        (u) => u['id'].toString().toLowerCase() == userId?.toLowerCase(),
+        orElse: () => throw Exception('User not found'),
+      );
+      return UserModel.fromJson(userData);
+    } else {
+      throw Exception('Failed to load user: ${response.statusCode}');
+    }
+  }
+
+  // ✅ query params بدل body
+  Future<void> updateUser({
+    required String id,
+    required String newUserName,
+    required String newEmail,
+    String? currentPassword,
+    String? newPassword,
+  }) async {
+    final token = await _getToken();
+
+    // ✅ بنبني الـ URL مع الـ query params
+    // ✅ بنبني الـ URL يدوياً عشان نتحكم في الـ encoding
+    final queryParams = StringBuffer();
+    queryParams.write('id=${Uri.encodeComponent(id)}');
+    queryParams.write('&newUserName=${Uri.encodeComponent(newUserName)}');
+    queryParams.write('&newEmail=${Uri.encodeComponent(newEmail)}');
+    if (currentPassword != null && currentPassword.isNotEmpty) {
+      queryParams.write(
+        '&currentPassword=${Uri.encodeComponent(currentPassword)}',
+      );
+    }
+    if (newPassword != null && newPassword.isNotEmpty) {
+      queryParams.write('&newPassword=${Uri.encodeComponent(newPassword)}');
+    }
+
+    final uri = Uri.parse('$_baseUrl/UpdateUser?$queryParams');
+    print('UPDATE URI: $uri');
+    final response = await http.post(
+      uri,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+    // ✅ أضف السطرين دول
+    print('STATUS: ${response.statusCode}');
+    print('BODY: ${response.body}');
+
+    if (response.statusCode != 200) {
+      try {
+        final body = jsonDecode(response.body);
+        // ✅ الـ response object فيه message
+        if (body is Map && body.containsKey('message')) {
+          final message = body['message'].toString();
+          if (message.toLowerCase().contains('password')) {
+            throw Exception('Current password is incorrect');
+          }
+          throw Exception(message);
+        }
+      } catch (e) {
+        if (e is Exception) rethrow;
+      }
+      throw Exception('Failed to update profile');
+    }
+  }
+}
