@@ -30,30 +30,33 @@ class FeatureProductsItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadiusGeometry.circular(16),
-                child: product.pictureUrl.startsWith('http')
-                    ? Image.network(
-                        product.pictureUrl,
-                        fit: BoxFit.cover,
-                        height: 180,
-                        width: 160,
-                        errorBuilder: (context, error, stackTrace) => Container(
-                          color: Colors.grey[200],
+              Hero(
+                tag: 'product-image-${product.productId}',
+                child: ClipRRect(
+                  borderRadius: BorderRadiusGeometry.circular(16),
+                  child: product.pictureUrl.startsWith('http')
+                      ? Image.network(
+                          product.pictureUrl,
+                          fit: BoxFit.cover,
                           height: 180,
                           width: 160,
-                          child: const Icon(
-                            Icons.image_not_supported,
-                            color: Colors.grey,
+                          errorBuilder: (_, _, _) => Container(
+                            color: Colors.grey[200],
+                            height: 180,
+                            width: 160,
+                            child: const Icon(
+                              Icons.image_not_supported,
+                              color: Colors.grey,
+                            ),
                           ),
+                        )
+                      : Image.asset(
+                          product.pictureUrl,
+                          fit: BoxFit.cover,
+                          height: 180,
+                          width: 160,
                         ),
-                      )
-                    : Image.asset(
-                        product.pictureUrl,
-                        fit: BoxFit.cover,
-                        height: 180,
-                        width: 160,
-                      ),
+                ),
               ),
               const Gap(8),
               Text(

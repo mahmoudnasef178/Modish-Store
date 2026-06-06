@@ -16,7 +16,7 @@ class CartItemModel {
   factory CartItemModel.fromJson(Map<String, dynamic> json) {
     final product = json['product'];
 
-    // لو product جه كـ String (ID بس) مش Object
+    // If product came as a String (ID only), not as an Object
     if (product is String) {
       return CartItemModel(
         productId: product,

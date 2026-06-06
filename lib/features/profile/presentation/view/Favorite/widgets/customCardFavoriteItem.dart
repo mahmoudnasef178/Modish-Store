@@ -39,36 +39,37 @@ class CustomCardFavoriteItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: size.height * 0.012),
         child: Row(
           children: [
-            // ✅ صورة المنتج
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: item.pictureUrl.startsWith('http')
-                  ? Image.network(
-                      item.pictureUrl,
-                      height: imageSize,
-                      width: imageSize,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Container(
+            Hero(
+              tag: 'product-image-${item.id}',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: item.pictureUrl.startsWith('http')
+                    ? Image.network(
+                        item.pictureUrl,
                         height: imageSize,
                         width: imageSize,
-                        color: Colors.grey[200],
-                        child: Icon(
-                          Icons.image_not_supported,
-                          color: Colors.grey,
-                          size: imageSize * 0.4,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, _, _) => Container(
+                          height: imageSize,
+                          width: imageSize,
+                          color: Colors.grey[200],
+                          child: Icon(
+                            Icons.image_not_supported,
+                            color: Colors.grey,
+                            size: imageSize * 0.4,
+                          ),
                         ),
+                      )
+                    : Image.asset(
+                        item.pictureUrl,
+                        height: imageSize,
+                        width: imageSize,
+                        fit: BoxFit.cover,
                       ),
-                    )
-                  : Image.asset(
-                      item.pictureUrl,
-                      height: imageSize,
-                      width: imageSize,
-                      fit: BoxFit.cover,
-                    ),
+              ),
             ),
             SizedBox(width: size.width * 0.04),
 
-            // ✅ تفاصيل المنتج
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +105,6 @@ class CustomCardFavoriteItem extends StatelessWidget {
               ),
             ),
 
-            // ✅ زرار الحذف من الـ favorites
             GestureDetector(
               onTap: () =>
                   context.read<FavoriteCubit>().toggleFavoriteById(item.id),

@@ -15,7 +15,6 @@ class ProductRepository {
       final response = await _dio.get('$_baseUrl/products');
       final List allProducts = response.data as List;
 
-      // ✅ فلتر على الـ client side
       final filtered = allProducts.where((p) {
         final category = p['category'];
 
@@ -33,8 +32,6 @@ class ProductRepository {
 
         return matchesCategory && matchesSearch;
       }).toList();
-      // في الـ products repository أو cubit، أضف مؤقتاً:
-      print('FIRST PRODUCT RAW: ${response.data[0]}');
 
       return ProductsResponseModel.fromJson(filtered);
     } on DioException catch (e) {

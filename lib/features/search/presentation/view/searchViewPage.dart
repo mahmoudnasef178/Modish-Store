@@ -55,9 +55,7 @@ class _SearchViewState extends State<_SearchView> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    // ✅ على التابلت يعرض 3 كولامز، على الموبايل 2
     final crossAxisCount = size.shortestSide > 600 ? 3 : 2;
-    // ✅ الـ padding يتكيف مع حجم الشاشة
     final horizontalPadding = size.width * 0.04;
 
     return Column(
@@ -109,7 +107,7 @@ class _SearchViewState extends State<_SearchView> {
                   padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                   itemCount: state.products.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: crossAxisCount, // ✅ dynamic
+                    crossAxisCount: crossAxisCount,
                     mainAxisSpacing: size.height * 0.015,
                     crossAxisSpacing: size.width * 0.03,
                     childAspectRatio: 0.7,

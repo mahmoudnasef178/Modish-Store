@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/features/HomePage/data/models/Favorite/favorite_model.dart';
 import 'package:graduation_project/features/HomePage/data/models/products/products_model.dart';
@@ -15,7 +16,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     emit(FavoriteLoading());
     try {
       final response = await _repository.getFavorites();
-      _items = response.favoriteItems; // ✅ اتغير من items لـ favoriteItems
+      _items = response.favoriteItems;
       emit(FavoriteSuccess(List.from(_items)));
     } catch (e) {
       emit(FavoriteFailure(e.toString().replaceAll('Exception: ', '')));
@@ -24,8 +25,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
 
   Future<void> toggleFavorite(ProductModel product) async {
     final exists = isFavorite(product.productId);
-    print('TOGGLE FAVORITE - exists: $exists, productId: ${product.productId}');
-    print('CURRENT ITEMS: ${_items.map((e) => e.id).toList()}');
+    debugPrint('TOGGLE FAVORITE - exists: $exists, productId: ${product.productId}');
+    debugPrint('CURRENT ITEMS: ${_items.map((e) => e.id).toList()}');
     try {
       if (exists) {
         await _repository.removeFromFavorite(product.productId);
@@ -42,10 +43,10 @@ class FavoriteCubit extends Cubit<FavoriteState> {
           ),
         );
       }
-      print('AFTER TOGGLE ITEMS: ${_items.map((e) => e.id).toList()}');
+      debugPrint('AFTER TOGGLE ITEMS: ${_items.map((e) => e.id).toList()}');
       emit(FavoriteSuccess(List.from(_items)));
     } catch (e) {
-      print('TOGGLE FAVORITE ERROR: $e');
+      debugPrint('TOGGLE FAVORITE ERROR: $e');
       emit(FavoriteFailure(e.toString().replaceAll('Exception: ', '')));
     }
   }

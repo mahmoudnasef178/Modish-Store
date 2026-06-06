@@ -80,7 +80,7 @@ class RecommendedPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.08),
+                            color: Colors.grey.withValues(alpha: 0.08),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
@@ -90,30 +90,33 @@ class RecommendedPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(16),
-                              ),
-                              child: product.pictureUrl.startsWith('http')
-                                  ? Image.network(
-                                      product.pictureUrl,
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
-                                      errorBuilder:
-                                          (context, error, stackTrace) =>
-                                              Container(
-                                                color: Colors.grey[200],
-                                                child: const Icon(
-                                                  Icons.image_not_supported,
-                                                  color: Colors.grey,
+                            child: Hero(
+                              tag: 'product-image-${product.productId}',
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(16),
+                                ),
+                                child: product.pictureUrl.startsWith('http')
+                                    ? Image.network(
+                                        product.pictureUrl,
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                        errorBuilder:
+                                            (_, _, _) =>
+                                                Container(
+                                                  color: Colors.grey[200],
+                                                  child: const Icon(
+                                                    Icons.image_not_supported,
+                                                    color: Colors.grey,
+                                                  ),
                                                 ),
-                                              ),
-                                    )
-                                  : Image.asset(
-                                      product.pictureUrl,
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
-                                    ),
+                                      )
+                                    : Image.asset(
+                                        product.pictureUrl,
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                      ),
+                              ),
                             ),
                           ),
                           Padding(

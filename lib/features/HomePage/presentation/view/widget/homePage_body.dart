@@ -35,7 +35,7 @@ class HomepageBody extends StatelessWidget {
                     leftIcon: "assets/icons/Drawer.svg",
                     title: "Modish",
                     rightIcon: "assets/icons/Notification.svg",
-                    showThemeToggle: true, // ✅ هيظهر الزرار في الـ homepage بس
+                    showThemeToggle: true,
                     leftIconOnTap: () {
                       globalKey.currentState!.openDrawer();
                     },

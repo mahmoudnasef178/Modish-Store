@@ -6,6 +6,7 @@ import 'package:graduation_project/core/colors.dart';
 import 'package:graduation_project/core/fontstyle.dart';
 import 'package:graduation_project/features/HomePage/presentation/view/widget/custom_AppBar.dart';
 import 'package:graduation_project/features/login_signup/login/presentation/view/widget/custom_textField.dart';
+import 'package:graduation_project/features/profile/data/models/user_model.dart';
 import 'package:graduation_project/features/profile/data/repo/profile_repo.dart';
 import 'package:graduation_project/features/profile/logic/profile/profile_cubit.dart';
 import 'package:graduation_project/features/profile/logic/profile/profile_state.dart';
@@ -48,7 +49,7 @@ class _ProfileViewState extends State<_ProfileView> {
     super.dispose();
   }
 
-  void _populateFields(user) {
+  void _populateFields(UserModel user) {
     if (!_fieldsPopulated) {
       _nameController.text = user.displayName;
       _emailController.text = user.email;
@@ -61,7 +62,6 @@ class _ProfileViewState extends State<_ProfileView> {
     final size = MediaQuery.of(context).size;
     final isTablet = size.shortestSide > 600;
 
-    // ✅ قيم responsive
     final avatarRadius = size.shortestSide * (isTablet ? 0.1 : 0.13);
     final avatarIconSize = avatarRadius * 1.1;
     final horizontalPadding = size.width * (isTablet ? 0.1 : 0.06);
@@ -152,7 +152,6 @@ class _ProfileViewState extends State<_ProfileView> {
                   ),
                   Gap(size.height * 0.04),
 
-                  // ✅ صورة البروفايل
                   GestureDetector(
                     onTap: () => cubit.pickImage(),
                     child: Stack(
@@ -203,23 +202,23 @@ class _ProfileViewState extends State<_ProfileView> {
                     ),
                   SizedBox(height: verticalSpacing * 1.5),
 
-                  // ✅ Name field
                   _buildLabel('Name', titleFontSize),
                   SizedBox(height: verticalSpacing * 0.8),
                   CustomTextfield(
                     hintText: "Your Name",
                     controller: _nameController,
                     validator: (value) {
-                      if (value == null || value.isEmpty)
+                      if (value == null || value.isEmpty) {
                         return 'Please enter your name';
-                      if (value.contains(' '))
+                      }
+                      if (value.contains(' ')) {
                         return 'Name cannot contain spaces';
+                      }
                       return null;
                     },
                   ),
                   SizedBox(height: verticalSpacing * 1.5),
 
-                  // ✅ Email field
                   _buildLabel('Email Address', titleFontSize),
                   SizedBox(height: verticalSpacing * 0.8),
                   CustomTextfield(
@@ -227,18 +226,19 @@ class _ProfileViewState extends State<_ProfileView> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
-                      if (value == null || value.isEmpty)
+                      if (value == null || value.isEmpty) {
                         return 'Please enter your email';
+                      }
                       if (!RegExp(
                         r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$',
-                      ).hasMatch(value))
+                      ).hasMatch(value)) {
                         return 'Please enter a valid email';
+                      }
                       return null;
                     },
                   ),
                   SizedBox(height: verticalSpacing * 1.5),
 
-                  // ✅ Current Password field
                   _buildLabel('Current Password', titleFontSize),
                   SizedBox(height: verticalSpacing * 0.8),
                   CustomTextfield(
@@ -252,14 +252,14 @@ class _ProfileViewState extends State<_ProfileView> {
                     ),
                     validator: (value) {
                       if (_newPasswordController.text.isNotEmpty &&
-                          (value == null || value.isEmpty))
+                          (value == null || value.isEmpty)) {
                         return 'Please enter your current password';
+                      }
                       return null;
                     },
                   ),
                   SizedBox(height: verticalSpacing * 1.5),
 
-                  // ✅ New Password field
                   _buildLabel('New Password', titleFontSize),
                   SizedBox(height: verticalSpacing * 0.8),
                   CustomTextfield(
@@ -271,14 +271,15 @@ class _ProfileViewState extends State<_ProfileView> {
                       () => _isNewPasswordVisible = !_isNewPasswordVisible,
                     ),
                     validator: (value) {
-                      if (value != null && value.isNotEmpty && value.length < 8)
+                      if (value != null && value.isNotEmpty && value.length < 8) {
                         return 'Password must be at least 8 characters';
+                      }
                       return null;
                     },
                   ),
                   SizedBox(height: verticalSpacing * 2),
 
-                  // ✅ Save Button
+                  // Save button
                   SizedBox(
                     width: double.infinity,
                     child: GestureDetector(
@@ -343,7 +344,7 @@ class _ProfileViewState extends State<_ProfileView> {
     );
   }
 
-  // ✅ helper method للـ labels
+  // Helper method for field labels
   Widget _buildLabel(String text, double fontSize) {
     return Align(
       alignment: Alignment.centerLeft,

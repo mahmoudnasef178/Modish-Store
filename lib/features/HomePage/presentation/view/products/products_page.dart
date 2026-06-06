@@ -137,26 +137,29 @@ class _ProductItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: product.pictureUrl.startsWith('http')
-                  ? Image.network(
-                      product.pictureUrl,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      errorBuilder: (context, error, stackTrace) => Container(
-                        color: Colors.grey[200],
-                        child: const Icon(
-                          Icons.image_not_supported,
-                          color: Colors.grey,
+            child: Hero(
+              tag: 'product-image-${product.productId}',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: product.pictureUrl.startsWith('http')
+                    ? Image.network(
+                        product.pictureUrl,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        errorBuilder: (_, _, _) => Container(
+                          color: Colors.grey[200],
+                          child: const Icon(
+                            Icons.image_not_supported,
+                            color: Colors.grey,
+                          ),
                         ),
+                      )
+                    : Image.asset(
+                        product.pictureUrl,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
                       ),
-                    )
-                  : Image.asset(
-                      product.pictureUrl,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                    ),
+              ),
             ),
           ),
           const Gap(8),

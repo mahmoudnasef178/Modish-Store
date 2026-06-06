@@ -17,15 +17,15 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  static GlobalKey<ScaffoldState> globalKey = GlobalKey();
+  static final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   late PageController _pageController;
 
-  static List<Widget> listWidget = [
-    HomepageBody(globalKey: globalKey),
-    Searchviewpage(),
-    CartPage(),
-    Profileviewpage(),
-  ];
+  List<Widget> get _pages => [
+        HomepageBody(globalKey: _scaffoldKey),
+        const Searchviewpage(),
+        const CartPage(),
+        const Profileviewpage(),
+      ];
 
   @override
   void initState() {
@@ -42,10 +42,10 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NavigationCubit(),
+      create: (_) => NavigationCubit(),
       child: BlocBuilder<NavigationCubit, NavigationState>(
         builder: (context, state) {
-          // ✅ لما الـ index يتغير من الـ bottom nav، حرك الـ PageView
+          // Sync PageView when bottom nav index changes
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (_pageController.hasClients &&
                 _pageController.page?.round() != state.currentIndex) {
@@ -58,18 +58,18 @@ class _HomepageState extends State<Homepage> {
           });
 
           return Scaffold(
-            key: globalKey,
-            drawer: Drawer(child: CustomDrawer()),
+            key: _scaffoldKey,
+            drawer: const Drawer(child: CustomDrawer()),
             body: PageView(
               controller: _pageController,
               physics: const ClampingScrollPhysics(),
               onPageChanged: (index) {
-                // ✅ لما يعمل swipe، غير الـ bottom nav
+                // Sync bottom nav when user swipes
                 context.read<NavigationCubit>().changeIndex(index);
               },
-              children: listWidget,
+              children: _pages,
             ),
-            bottomNavigationBar: Custombottomnavigationbar(),
+            bottomNavigationBar: const Custombottomnavigationbar(),
           );
         },
       ),

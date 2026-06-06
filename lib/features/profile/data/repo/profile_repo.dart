@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:graduation_project/features/profile/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
@@ -58,7 +59,7 @@ class ProfileRepository {
     }
   }
 
-  // ✅ query params بدل body
+  /// Updates user profile using query parameters.
   Future<void> updateUser({
     required String id,
     required String newUserName,
@@ -68,8 +69,7 @@ class ProfileRepository {
   }) async {
     final token = await _getToken();
 
-    // ✅ بنبني الـ URL مع الـ query params
-    // ✅ بنبني الـ URL يدوياً عشان نتحكم في الـ encoding
+    // Build query params manually to control encoding
     final queryParams = StringBuffer();
     queryParams.write('id=${Uri.encodeComponent(id)}');
     queryParams.write('&newUserName=${Uri.encodeComponent(newUserName)}');
@@ -84,7 +84,7 @@ class ProfileRepository {
     }
 
     final uri = Uri.parse('$_baseUrl/UpdateUser?$queryParams');
-    print('UPDATE URI: $uri');
+    debugPrint('UPDATE URI: $uri');
     final response = await http.post(
       uri,
       headers: {
@@ -92,14 +92,12 @@ class ProfileRepository {
         'Content-Type': 'application/json',
       },
     );
-    // ✅ أضف السطرين دول
-    print('STATUS: ${response.statusCode}');
-    print('BODY: ${response.body}');
+    debugPrint('STATUS: ${response.statusCode}');
+    debugPrint('BODY: ${response.body}');
 
     if (response.statusCode != 200) {
       try {
         final body = jsonDecode(response.body);
-        // ✅ الـ response object فيه message
         if (body is Map && body.containsKey('message')) {
           final message = body['message'].toString();
           if (message.toLowerCase().contains('password')) {
@@ -114,3 +112,4 @@ class ProfileRepository {
     }
   }
 }
+

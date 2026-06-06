@@ -105,7 +105,6 @@ class _LoginFormState extends State<_LoginForm> {
                 ),
                 SizedBox(height: size.height * 0.06),
 
-                // ✅ Email field
                 _buildLabel("Email Address", labelFontSize),
                 SizedBox(height: size.height * 0.015),
                 CustomTextfield(
@@ -113,14 +112,14 @@ class _LoginFormState extends State<_LoginForm> {
                   controller: _emailOrUserNameController,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    if (value == null || value.isEmpty)
+                    if (value == null || value.isEmpty) {
                       return 'Please enter your email or username';
+                    }
                     return null;
                   },
                 ),
                 SizedBox(height: size.height * 0.03),
 
-                // ✅ Password field
                 _buildLabel("Password", labelFontSize),
                 SizedBox(height: size.height * 0.015),
                 BlocBuilder<LoginCubit, LoginState>(
@@ -136,8 +135,9 @@ class _LoginFormState extends State<_LoginForm> {
                       onIconTap: () =>
                           context.read<LoginCubit>().togglePasswordVisibility(),
                       validator: (value) {
-                        if (value == null || value.isEmpty)
+                        if (value == null || value.isEmpty) {
                           return 'Please enter your password';
+                        }
                         return null;
                       },
                     );

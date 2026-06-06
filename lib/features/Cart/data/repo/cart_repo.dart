@@ -28,19 +28,15 @@ class CartRepository {
     required String productId,
     required double price,
   }) async {
-    print('addToCart called: $productId, $price'); // ✅
     final userId = await _getUserId();
-    print('userId: $userId'); // ✅
     if (userId == null) throw Exception('User not logged in');
     try {
       final response = await _dio.post(
         '$_baseUrl/cart/AddItems',
         data: {'user': userId, 'productId': productId, 'price': price},
       );
-      print('CART RESPONSE: ${response.data}');
       return CartModel.fromJson(response.data);
     } on DioException catch (e) {
-      print('CART ERROR: ${e.response?.data}');
       throw Exception(e.response?.data?['message'] ?? 'Failed to add to cart');
     }
   }
@@ -54,7 +50,7 @@ class CartRepository {
         data: {'userId': userId},
       );
       return CartModel.fromJson(response.data);
-    } on DioException catch (e) {
+    } on DioException {
       throw Exception('Failed to remove from cart');
     }
   }
@@ -70,10 +66,8 @@ class CartRepository {
         '$_baseUrl/cart/items/$productId',
         data: {'userId': userId, 'quantity': quantity},
       );
-      print('UPDATE RESPONSE: ${response.data}'); // ✅
       return CartModel.fromJson(response.data);
-    } on DioException catch (e) {
-      print('UPDATE ERROR: ${e.response?.data}'); // ✅
+    } on DioException {
       throw Exception('Failed to update quantity');
     }
   }
@@ -83,7 +77,7 @@ class CartRepository {
     if (userId == null) throw Exception('User not logged in');
     try {
       await _dio.delete('$_baseUrl/cart/$userId');
-    } on DioException catch (e) {
+    } on DioException {
       throw Exception('Failed to clear cart');
     }
   }

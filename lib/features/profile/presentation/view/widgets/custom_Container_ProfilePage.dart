@@ -26,7 +26,11 @@ class CustomContainerProfilepage extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          SvgPicture.asset(icon, height: iconSize, color: Colors.grey.shade700),
+          SvgPicture.asset(
+            icon,
+            height: iconSize,
+            colorFilter: ColorFilter.mode(Colors.grey.shade700, BlendMode.srcIn),
+          ),
           SizedBox(width: size.width * 0.05),
           Text(
             text,

@@ -22,7 +22,7 @@ class AboutUsPage extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.all(size.shortestSide * 0.02),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
@@ -53,7 +53,7 @@ class AboutUsPage extends StatelessWidget {
                       height: size.shortestSide * 0.45,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white.withOpacity(0.07),
+                        color: Colors.white.withValues(alpha: 0.07),
                       ),
                     ),
                   ),
@@ -65,7 +65,7 @@ class AboutUsPage extends StatelessWidget {
                       height: size.shortestSide * 0.3,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white.withOpacity(0.07),
+                        color: Colors.white.withValues(alpha: 0.07),
                       ),
                     ),
                   ),
@@ -78,9 +78,9 @@ class AboutUsPage extends StatelessWidget {
                         height: size.shortestSide * 0.2,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.white.withOpacity(0.15),
+                          color: Colors.white.withValues(alpha: 0.15),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.4),
+                            color: Colors.white.withValues(alpha: 0.4),
                             width: 2,
                           ),
                         ),
@@ -110,7 +110,7 @@ class AboutUsPage extends StatelessWidget {
                         'Fashion meets simplicity',
                         style: TextStyle(
                           fontSize: size.shortestSide * 0.035,
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withValues(alpha: 0.8),
                           letterSpacing: 1,
                         ),
                       ),
@@ -200,7 +200,7 @@ class _SectionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: kPrimaryColor.withOpacity(0.08),
+            color: kPrimaryColor.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -215,7 +215,7 @@ class _SectionCard extends StatelessWidget {
                 width: iconBoxSize,
                 height: iconBoxSize,
                 decoration: BoxDecoration(
-                  color: kPrimaryColor.withOpacity(0.12),
+                  color: kPrimaryColor.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -293,7 +293,7 @@ class _WhyShopCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: kPrimaryColor.withOpacity(0.08),
+            color: kPrimaryColor.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -308,7 +308,7 @@ class _WhyShopCard extends StatelessWidget {
                 width: iconBoxSize,
                 height: iconBoxSize,
                 decoration: BoxDecoration(
-                  color: kPrimaryColor.withOpacity(0.12),
+                  color: kPrimaryColor.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -397,7 +397,7 @@ class _ContactCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: kPrimaryColor.withOpacity(0.08),
+            color: kPrimaryColor.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -412,7 +412,7 @@ class _ContactCard extends StatelessWidget {
                 width: iconBoxSize,
                 height: iconBoxSize,
                 decoration: BoxDecoration(
-                  color: kPrimaryColor.withOpacity(0.12),
+                  color: kPrimaryColor.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(

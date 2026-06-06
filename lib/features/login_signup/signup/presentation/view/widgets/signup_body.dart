@@ -132,22 +132,20 @@ class _SignupFormState extends State<_SignupForm> {
                   ),
                 ),
                 SizedBox(height: size.height * 0.05),
-
-                // ✅ Name field
                 _buildLabel("Name", labelFontSize),
                 SizedBox(height: size.height * 0.015),
                 CustomTextfield(
                   hintText: "Your Name",
                   controller: _nameController,
                   validator: (value) {
-                    if (value == null || value.isEmpty)
+                    if (value == null || value.isEmpty) {
                       return 'Please enter your name';
+                    }
                     return null;
                   },
                 ),
                 SizedBox(height: size.height * 0.03),
 
-                // ✅ Email field
                 _buildLabel("Email Address", labelFontSize),
                 SizedBox(height: size.height * 0.015),
                 CustomTextfield(
@@ -155,17 +153,19 @@ class _SignupFormState extends State<_SignupForm> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    if (value == null || value.isEmpty)
+                    if (value == null || value.isEmpty) {
                       return 'Please enter your email';
+                    }
                     if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$')
-                        .hasMatch(value))
+                        .hasMatch(value)) {
                       return 'Please enter a valid email';
+                    }
                     return null;
                   },
                 ),
                 SizedBox(height: size.height * 0.03),
 
-                // ✅ Password field
+                // Password field
                 _buildLabel("Password", labelFontSize),
                 SizedBox(height: size.height * 0.015),
                 BlocBuilder<SignupCubit, SignupState>(
@@ -180,10 +180,12 @@ class _SignupFormState extends State<_SignupForm> {
                       onIconTap: () =>
                           context.read<SignupCubit>().togglePasswordVisibility(),
                       validator: (value) {
-                        if (value == null || value.isEmpty)
+                        if (value == null || value.isEmpty) {
                           return 'Please enter your password';
-                        if (value.length < 8)
+                        }
+                        if (value.length < 8) {
                           return 'Password must be at least 8 characters';
+                        }
                         return null;
                       },
                     );
@@ -191,7 +193,7 @@ class _SignupFormState extends State<_SignupForm> {
                 ),
                 SizedBox(height: size.height * 0.05),
 
-                // ✅ Sign Up button
+                // Sign Up button
                 BlocBuilder<SignupCubit, SignupState>(
                   builder: (context, state) {
                     final isLoading = state is SignupLoading;

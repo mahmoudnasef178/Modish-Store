@@ -27,23 +27,26 @@ class Featureproductdetails extends StatelessWidget {
             width: double.infinity,
             child: Stack(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadiusGeometry.circular(26),
-                  child: product.pictureUrl.startsWith('http')
-                      ? Image.network(
-                          product.pictureUrl,
-                          fit: BoxFit.fill,
-                          height: context.height * .5,
-                          width: double.infinity,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Container(color: Colors.grey[200]),
-                        )
-                      : Image.asset(
-                          product.pictureUrl,
-                          fit: BoxFit.fill,
-                          height: context.height * .5,
-                          width: double.infinity,
-                        ),
+                Hero(
+                  tag: 'product-image-${product.productId}',
+                  child: ClipRRect(
+                    borderRadius: BorderRadiusGeometry.circular(26),
+                    child: product.pictureUrl.startsWith('http')
+                        ? Image.network(
+                            product.pictureUrl,
+                            fit: BoxFit.fill,
+                            height: context.height * .5,
+                            width: double.infinity,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(color: Colors.grey[200]),
+                          )
+                        : Image.asset(
+                            product.pictureUrl,
+                            fit: BoxFit.fill,
+                            height: context.height * .5,
+                            width: double.infinity,
+                          ),
+                  ),
                 ),
                 Positioned(
                   left: context.height * .04,
@@ -58,7 +61,6 @@ class Featureproductdetails extends StatelessWidget {
                   top: context.height * .06,
                   child: BlocBuilder<FavoriteCubit, FavoriteState>(
                     builder: (context, state) {
-                      // ✅ بنقرأ من الـ state مش من context.read
                       final isSelected = state is FavoriteSuccess
                           ? state.items.any((e) => e.id == product.productId)
                           : false;
@@ -150,14 +152,37 @@ class Featureproductdetails extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(64),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Center(
-        child: isSelected
-            ? SvgPicture.asset(
-                "assets/icons/isSelectedFavorite.svg",
-                height: 22,
-              )
-            : SvgPicture.asset("assets/icons/drawer_icon/Path.svg", height: 22),
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 250),
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return ScaleTransition(
+              scale: Tween<double>(begin: 0.7, end: 1.0).animate(
+                CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
+              ),
+              child: child,
+            );
+          },
+          child: isSelected
+              ? SvgPicture.asset(
+                  "assets/icons/isSelectedFavorite.svg",
+                  key: const ValueKey('selected'),
+                  height: 22,
+                )
+              : SvgPicture.asset(
+                  "assets/icons/drawer_icon/Path.svg",
+                  key: const ValueKey('unselected'),
+                  height: 22,
+                ),
+        ),
       ),
     );
   }

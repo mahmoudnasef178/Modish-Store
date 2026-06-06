@@ -94,7 +94,7 @@ class FavoriteViewPage extends StatelessWidget {
                 vertical: size.height * 0.015,
               ),
               itemCount: state.items.length,
-              separatorBuilder: (_, __) => const Divider(height: 1),
+              separatorBuilder: (_, _) => const Divider(height: 1),
               itemBuilder: (context, index) {
                 return CustomCardFavoriteItem(item: state.items[index]);
               },

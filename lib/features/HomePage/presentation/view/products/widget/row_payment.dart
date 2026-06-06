@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/core/fontstyle.dart';
 import 'package:graduation_project/features/Cart/logic/cart_cubit/cart_cubit.dart';
 import 'package:graduation_project/features/HomePage/data/models/products/products_model.dart';
 import 'package:graduation_project/features/HomePage/presentation/view/products/widget/container_payment.dart';
@@ -21,7 +20,7 @@ class RowPayment extends StatelessWidget {
               productId: product.productId,
               price: product.price,
             );
-            // ✅ بدل الـ SnackBar
+            // Show confirmation dialog
             showDialog(
               context: context,
               builder: (context) => const _SuccessDialog(),

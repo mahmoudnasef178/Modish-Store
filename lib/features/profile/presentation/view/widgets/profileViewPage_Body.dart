@@ -167,15 +167,17 @@ class ProfileviewpageBody extends StatelessWidget {
 
               if (confirm == true) {
                 await LoginCubit.logout();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (_) => SplashView()),
-                  (route) => false,
-                );
+                if (context.mounted) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => SplashView()),
+                    (route) => false,
+                  );
+                }
               }
             },
             spacing: itemSpacing,
-            isLast: true, // ✅ آخر عنصر مش هيحط divider
+            isLast: true,
           ),
 
           SizedBox(height: size.height * 0.03),

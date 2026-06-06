@@ -41,7 +41,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width * .5,
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0),
@@ -50,7 +50,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             SizedBox(height: MediaQuery.of(context).size.height * .1),
             GestureDetector(
               onTap: () {
-                Navigator.pop(context); // اقفل الـ drawer الأول
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => const ProfileScreen()),
@@ -211,11 +211,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
                 if (confirm == true) {
                   await LoginCubit.logout();
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (_) => SplashView()),
-                    (route) => false,
-                  );
+                  if (context.mounted) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => SplashView()),
+                      (route) => false,
+                    );
+                  }
                 }
               },
             ),

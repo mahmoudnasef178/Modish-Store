@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/features/Cart/data/models/cart_model.dart';
 import 'package:graduation_project/features/Cart/data/repo/cart_repo.dart';
-
 import 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
@@ -37,10 +36,9 @@ class CartCubit extends Cubit<CartState> {
   }
 
   Future<void> removeFromCart(String productId) async {
-    // ✅ حدث الـ UI فوراً
-    final currentCart = (state is CartLoaded)
-        ? (state as CartLoaded).cart
-        : (state as CartItemAdded).cart;
+    // Optimistically update the UI before the API call
+    final currentCart = _currentCart;
+    if (currentCart == null) return;
 
     final updatedItems = currentCart.cartItems
         .where((item) => item.productId != productId)
@@ -62,21 +60,19 @@ class CartCubit extends Cubit<CartState> {
       ),
     );
 
+    // Fire-and-forget the backend call; UI is already updated
     try {
       await _repo.removeFromCart(productId);
-    } catch (e) {
-      // لو فشل مش مشكلة
-    }
+    } catch (_) {}
   }
 
   Future<void> updateQuantity({
     required String productId,
     required int quantity,
   }) async {
-    // ✅ حدث الـ UI فوراً من غير ما تنتظر الـ API
-    final currentCart = (state is CartLoaded)
-        ? (state as CartLoaded).cart
-        : (state as CartItemAdded).cart;
+    // Optimistically update the UI before the API call
+    final currentCart = _currentCart;
+    if (currentCart == null) return;
 
     final updatedItems = currentCart.cartItems.map((item) {
       if (item.productId == productId) {
@@ -101,12 +97,10 @@ class CartCubit extends Cubit<CartState> {
       ),
     );
 
-    // ✅ كلم الـ API في الخلفية بس
+    // Fire-and-forget the backend call; UI is already updated
     try {
       await _repo.updateQuantity(productId: productId, quantity: quantity);
-    } catch (e) {
-      // لو فشل مش مشكلة، الـ UI اتحدث بالفعل
-    }
+    } catch (_) {}
   }
 
   Future<void> clearCart() async {
@@ -119,4 +113,11 @@ class CartCubit extends Cubit<CartState> {
       emit(CartError(e.toString().replaceAll('Exception: ', '')));
     }
   }
+
+  /// Returns the active [CartModel] from either [CartLoaded] or [CartItemAdded].
+  CartModel? get _currentCart => switch (state) {
+        CartLoaded() => (state as CartLoaded).cart,
+        CartItemAdded() => (state as CartItemAdded).cart,
+        _ => null,
+      };
 }

@@ -14,7 +14,7 @@ class CustomAppbar extends StatelessWidget {
     this.leftIconOnTap,
     this.rightIconOnTap,
     this.showIcon = true,
-    this.showThemeToggle = false, // ✅ اختياري - مش كل الصفحات محتاجاه
+    this.showThemeToggle = false,
   });
 
   final bool showIcon;
@@ -55,7 +55,7 @@ class CustomAppbar extends StatelessWidget {
             // Right side
             Row(
               children: [
-                // ✅ زرار الـ dark mode
+                // Dark mode toggle
                 if (showThemeToggle)
                   BlocBuilder<ThemeCubit, bool>(
                     builder: (context, isDark) {

@@ -31,27 +31,30 @@ class RecommedationItem extends StatelessWidget {
           ),
           child: Row(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadiusGeometry.circular(8),
-                child: product.pictureUrl.startsWith('http')
-                    ? Image.network(
-                        product.pictureUrl,
-                        height: 68,
-                        width: 68,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => Container(
-                          color: Colors.grey[200],
+              Hero(
+                tag: 'product-image-${product.productId}',
+                child: ClipRRect(
+                  borderRadius: BorderRadiusGeometry.circular(8),
+                  child: product.pictureUrl.startsWith('http')
+                      ? Image.network(
+                          product.pictureUrl,
                           height: 68,
                           width: 68,
-                          child: const Icon(Icons.image_not_supported),
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, _, _) => Container(
+                            color: Colors.grey[200],
+                            height: 68,
+                            width: 68,
+                            child: const Icon(Icons.image_not_supported),
+                          ),
+                        )
+                      : Image.asset(
+                          product.pictureUrl,
+                          height: 68,
+                          width: 68,
+                          fit: BoxFit.cover,
                         ),
-                      )
-                    : Image.asset(
-                        product.pictureUrl,
-                        height: 68,
-                        width: 68,
-                        fit: BoxFit.cover,
-                      ),
+                ),
               ),
               const Gap(9),
               Flexible(

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:graduation_project/features/HomePage/data/models/Favorite/favorite_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,7 +15,7 @@ class FavoriteRepository {
 
   Future<String?> _getUserId() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('userId'); // ✅ لازم تخزن الـ userId وقت الـ login
+    return prefs.getString('userId');
   }
 
   Future<Options> _authOptions() async {
@@ -32,14 +33,14 @@ class FavoriteRepository {
       final userId = await _getUserId();
       final response = await _dio.get(
         _baseUrl,
-        queryParameters: {'userId': userId}, // ✅ بعت الـ userId كـ query
+        queryParameters: {'userId': userId},
         options: await _authOptions(),
       );
-      print('GET FAVORITES RESPONSE: ${response.data}');
+      debugPrint('GET FAVORITES RESPONSE: ${response.data}');
       return FavoriteResponseModel.fromJson(response.data);
     } on DioException catch (e) {
-      print('GET FAVORITES ERROR: ${e.response?.statusCode}');
-      print('GET FAVORITES ERROR DATA: ${e.response?.data}');
+      debugPrint('GET FAVORITES ERROR: ${e.response?.statusCode}');
+      debugPrint('GET FAVORITES ERROR DATA: ${e.response?.data}');
       throw Exception('Failed to load favorites');
     }
   }
@@ -47,16 +48,16 @@ class FavoriteRepository {
   Future<void> addToFavorite(String productId) async {
     try {
       final userId = await _getUserId();
-      print('ADD FAVORITE REQUEST: user=$userId, productId=$productId');
+      debugPrint('ADD FAVORITE REQUEST: user=$userId, productId=$productId');
       final response = await _dio.post(
         '$_baseUrl/AddItems',
         data: {'user': userId, 'productId': productId},
         options: await _authOptions(),
       );
-      print('ADD FAVORITE RESPONSE: ${response.data}');
+      debugPrint('ADD FAVORITE RESPONSE: ${response.data}');
     } on DioException catch (e) {
-      print('ADD FAVORITE ERROR STATUS: ${e.response?.statusCode}');
-      print('ADD FAVORITE ERROR DATA: ${e.response?.data}');
+      debugPrint('ADD FAVORITE ERROR STATUS: ${e.response?.statusCode}');
+      debugPrint('ADD FAVORITE ERROR DATA: ${e.response?.data}');
       final message =
           e.response?.data['message'] ??
           e.response?.data['title'] ??
@@ -68,7 +69,6 @@ class FavoriteRepository {
   Future<void> removeFromFavorite(String productId) async {
     try {
       final userId = await _getUserId();
-      // ✅ DELETE /Favorite/items/:productId بـ { userId } في الـ body
       await _dio.delete(
         '$_baseUrl/items/$productId',
         data: {'userId': userId},
