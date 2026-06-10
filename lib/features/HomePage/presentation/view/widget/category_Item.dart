@@ -44,7 +44,7 @@ class CategoryItem extends StatelessWidget {
                 category.name,
                 softWrap: true,
                 maxLines: 2,
-                style: t12.copyWith(color: secondaryColorText),
+                style: t12.copyWith(color: kSecondaryText(context)),
                 textAlign: TextAlign.center,
               ),
             ),

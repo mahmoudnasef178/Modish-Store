@@ -29,7 +29,7 @@ class NotificationBody extends StatelessWidget {
         Text(
           "NO NOTIFICATIONS",
           style: t18.copyWith(
-            color: primaryColorText,
+            color: kPrimaryText(context),
             fontWeight: FontWeight.w900,
           ),
         ),

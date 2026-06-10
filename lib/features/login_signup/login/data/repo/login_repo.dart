@@ -3,7 +3,8 @@ import 'package:graduation_project/features/login_signup/login/data/model/login_
 import 'package:graduation_project/features/login_signup/login/data/model/login_response_model.dart';
 
 class LoginRepository {
-  final Dio _dio = Dio();
+  final Dio _dio;
+  LoginRepository(this._dio);
 
   static const String _url =
       'http://ecommercetest2.runasp.net/api/Account/Login';

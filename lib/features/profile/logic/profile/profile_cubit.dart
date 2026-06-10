@@ -13,6 +13,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit(this._repo) : super(ProfileInitial());
 
   Future<void> loadUser() async {
+    if (isClosed) return;
     emit(ProfileLoading());
     try {
       currentUser = await _repo.getCurrentUser();
@@ -22,9 +23,9 @@ class ProfileCubit extends Cubit<ProfileState> {
       if (savedImagePath != null) {
         pickedImage = XFile(savedImagePath);
       }
-      emit(ProfileLoaded(currentUser!));
+      if (!isClosed) emit(ProfileLoaded(currentUser!));
     } catch (e) {
-      emit(ProfileError(e.toString()));
+      if (!isClosed) emit(ProfileError(e.toString()));
     }
   }
 
@@ -51,6 +52,12 @@ class ProfileCubit extends Cubit<ProfileState> {
         phoneNumber: currentUser!.phoneNumber,
         roles: currentUser!.roles,
       );
+      
+      // Update local SharedPreferences metadata
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('displayName', newUserName);
+      await prefs.setString('email', newEmail);
+
       if (!isClosed) emit(ProfileUpdated());
     } catch (e) {
       if (!isClosed) emit(ProfileError(e.toString()));

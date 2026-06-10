@@ -22,9 +22,14 @@ class CustomListtile extends StatelessWidget {
         padding: const EdgeInsets.only(left: 22.0),
         child: Row(
           children: [
-            SvgPicture.asset(icon, height: 22),
+            SvgPicture.asset(
+              icon,
+              height: 22,
+              colorFilter: ColorFilter.mode(
+                  kPrimaryText(context), BlendMode.srcIn),
+            ),
             SizedBox(width: MediaQuery.of(context).size.width * .1),
-            Text(text, style: t20.copyWith(color: primaryColorText)),
+            Text(text, style: t20.copyWith(color: kPrimaryText(context))),
           ],
         ),
       ),

@@ -39,7 +39,14 @@ class CustomAppbar extends StatelessWidget {
               child: SizedBox(
                 height: 32,
                 width: 32,
-                child: Center(child: SvgPicture.asset(leftIcon, height: 20)),
+                child: Center(
+                  child: SvgPicture.asset(
+                    leftIcon,
+                    height: 20,
+                    colorFilter: ColorFilter.mode(
+                        kPrimaryText(context), BlendMode.srcIn),
+                  ),
+                ),
               ),
             ),
 
@@ -47,7 +54,7 @@ class CustomAppbar extends StatelessWidget {
             Text(
               title,
               style: t22.copyWith(
-                color: primaryColorText,
+                color: kPrimaryText(context),
                 fontWeight: FontWeight.w900,
               ),
             ),
@@ -85,7 +92,12 @@ class CustomAppbar extends StatelessWidget {
                 if (showIcon)
                   GestureDetector(
                     onTap: rightIconOnTap,
-                    child: SvgPicture.asset(rightIcon, height: 30),
+                    child: SvgPicture.asset(
+                      rightIcon,
+                      height: 30,
+                      colorFilter: ColorFilter.mode(
+                          kPrimaryText(context), BlendMode.srcIn),
+                    ),
                   )
                 else
                   const SizedBox(width: 32),

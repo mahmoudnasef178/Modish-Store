@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -32,12 +33,13 @@ class Featureproductdetails extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadiusGeometry.circular(26),
                     child: product.pictureUrl.startsWith('http')
-                        ? Image.network(
-                            product.pictureUrl,
+                        ? CachedNetworkImage(
+                            imageUrl: product.pictureUrl,
                             fit: BoxFit.fill,
                             height: context.height * .5,
                             width: double.infinity,
-                            errorBuilder: (context, error, stackTrace) =>
+                            placeholder: (_, _) => Container(color: Colors.grey[200]),
+                            errorWidget: (context, error, stackTrace) =>
                                 Container(color: Colors.grey[200]),
                           )
                         : Image.asset(
@@ -88,7 +90,7 @@ class Featureproductdetails extends StatelessWidget {
                     alignment: AlignmentGeometry.centerStart,
                     child: Text(
                       product.categoryName,
-                      style: t12.copyWith(color: secondaryColorText),
+                      style: t12.copyWith(color: kSecondaryText(context)),
                     ),
                   ),
                   Gap(18),
@@ -99,7 +101,7 @@ class Featureproductdetails extends StatelessWidget {
                     child: Text(
                       "Description",
                       style: t14.copyWith(
-                        color: primaryColorText,
+                        color: kPrimaryText(context),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -108,7 +110,9 @@ class Featureproductdetails extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.grey[100],
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? const Color(0xff2A2A3E)
+                          : Colors.grey[100],
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -116,7 +120,7 @@ class Featureproductdetails extends StatelessWidget {
                           ? product.description
                           : "No description available.",
                       style: t14.copyWith(
-                        color: secondaryColorText,
+                        color: kSecondaryText(context),
                         height: 1.6,
                       ),
                     ),
@@ -134,56 +138,72 @@ class Featureproductdetails extends StatelessWidget {
   }
 
   Widget _customArrowContainer() {
-    return Container(
-      height: 42,
-      width: 42,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(64),
-      ),
-      child: Center(child: SvgPicture.asset("assets/icons/Arrow.svg")),
+    return Builder(
+      builder: (context) {
+        return Container(
+          height: 42,
+          width: 42,
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(64),
+          ),
+          child: Center(
+            child: SvgPicture.asset(
+              "assets/icons/Arrow.svg",
+              colorFilter: ColorFilter.mode(
+                  kPrimaryText(context), BlendMode.srcIn),
+            ),
+          ),
+        );
+      }
     );
   }
 
   Widget _customFavoriteContainer(bool isSelected) {
-    return Container(
-      height: 42,
-      width: 42,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(64),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Center(
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 250),
-          transitionBuilder: (Widget child, Animation<double> animation) {
-            return ScaleTransition(
-              scale: Tween<double>(begin: 0.7, end: 1.0).animate(
-                CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
+    return Builder(
+      builder: (context) {
+        return Container(
+          height: 42,
+          width: 42,
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(64),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
               ),
-              child: child,
-            );
-          },
-          child: isSelected
-              ? SvgPicture.asset(
-                  "assets/icons/isSelectedFavorite.svg",
-                  key: const ValueKey('selected'),
-                  height: 22,
-                )
-              : SvgPicture.asset(
-                  "assets/icons/drawer_icon/Path.svg",
-                  key: const ValueKey('unselected'),
-                  height: 22,
-                ),
-        ),
-      ),
+            ],
+          ),
+          child: Center(
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 250),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return ScaleTransition(
+                  scale: Tween<double>(begin: 0.7, end: 1.0).animate(
+                    CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
+                  ),
+                  child: child,
+                );
+              },
+              child: isSelected
+                  ? SvgPicture.asset(
+                      "assets/icons/isSelectedFavorite.svg",
+                      key: const ValueKey('selected'),
+                      height: 22,
+                    )
+                  : SvgPicture.asset(
+                      "assets/icons/drawer_icon/Path.svg",
+                      key: const ValueKey('unselected'),
+                      height: 22,
+                      colorFilter: ColorFilter.mode(
+                          kPrimaryText(context), BlendMode.srcIn),
+                    ),
+            ),
+          ),
+        );
+      }
     );
   }
 }

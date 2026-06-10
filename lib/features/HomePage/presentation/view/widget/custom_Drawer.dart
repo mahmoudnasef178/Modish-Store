@@ -30,11 +30,33 @@ class _CustomDrawerState extends State<CustomDrawer> {
     _loadUserData();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Reload every time the drawer comes back into view
+    _loadUserData();
+  }
+
   Future<void> _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
+
+    final rawName = prefs.getString('displayName') ?? '';
+    final email = prefs.getString('email') ?? '';
+
+    // Avoid showing the email as the display name
+    String resolvedName;
+    if (rawName.isNotEmpty && !rawName.contains('@')) {
+      resolvedName = rawName;
+    } else if (email.contains('@')) {
+      resolvedName = email.split('@')[0];
+    } else {
+      resolvedName = rawName;
+    }
+
     setState(() {
-      _email = prefs.getString('email') ?? '';
-      _displayName = prefs.getString('displayName') ?? '';
+      _email = email;
+      _displayName = resolvedName;
       _imagePath = prefs.getString('profile_image_path') ?? '';
     });
   }
@@ -49,31 +71,34 @@ class _CustomDrawerState extends State<CustomDrawer> {
           children: [
             SizedBox(height: MediaQuery.of(context).size.height * .1),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 Navigator.pop(context);
-                Navigator.push(
+                await Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => const ProfileScreen()),
                 );
+                // Reload after returning from profile edit
+                _loadUserData();
               },
               child: Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadiusGeometry.circular(62),
-                    child: _imagePath.isNotEmpty
-                        ? Image.file(
-                            File(_imagePath),
-                            height: 68,
-                            width: 68,
-                            fit: BoxFit.cover,
+                  CircleAvatar(
+                    radius: 34,
+                    backgroundColor: const Color(0xff9F8383),
+                    backgroundImage: (_imagePath.isNotEmpty &&
+                            File(_imagePath).existsSync())
+                        ? FileImage(File(_imagePath))
+                        : null,
+                    child: (_imagePath.isEmpty ||
+                            !File(_imagePath).existsSync())
+                        ? const Icon(
+                            Icons.person,
+                            size: 34,
+                            color: Colors.white,
                           )
-                        : Image.asset(
-                            "assets/images/My_Image.png",
-                            height: 68,
-                            width: 68,
-                            fit: BoxFit.cover,
-                          ),
+                        : null,
                   ),
+
                   Expanded(
                     child: ListTile(
                       title: Text(
@@ -82,12 +107,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             : _email.split('@')[0],
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
-                          color: primaryColorText,
+                          color: kPrimaryText(context),
                         ),
                       ),
                       subtitle: Text(
                         _email,
-                        style: TextStyle(color: secondaryColorText),
+                        style: TextStyle(color: kSecondaryText(context)),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -100,12 +125,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
             CustomListtile(
               icon: "assets/icons/drawer_icon/Profile.svg",
               text: "Profile",
-              onTap: () {
+              onTap: () async {
                 Navigator.pop(context);
-                Navigator.push(
+                await Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => const ProfileScreen()),
                 );
+                // Reload after returning from profile edit
+                _loadUserData();
               },
             ),
             SizedBox(height: 32),

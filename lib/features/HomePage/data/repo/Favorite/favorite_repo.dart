@@ -1,21 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:graduation_project/core/secure_storage_helper.dart';
 import 'package:graduation_project/features/HomePage/data/models/Favorite/favorite_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoriteRepository {
-  final Dio _dio = Dio();
+  final Dio _dio;
+  FavoriteRepository(this._dio);
   static const String _baseUrl =
       'https://gradutionapi-production.up.railway.app/api/v1/Favorite';
 
   Future<String?> _getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token');
+    return SecureStorageHelper.getToken();
   }
 
   Future<String?> _getUserId() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('userId');
+    return SecureStorageHelper.getUserId();
   }
 
   Future<Options> _authOptions() async {

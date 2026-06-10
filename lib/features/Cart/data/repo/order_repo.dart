@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 
 class OrderRepository {
-  final Dio _dio = Dio();
+  final Dio _dio;
+  OrderRepository(this._dio);
   static const String _baseUrl = 'https://gradutionapi-production.up.railway.app/api/v1';
 
   Future<Map<String, dynamic>> placeOrder({

@@ -6,6 +6,13 @@ class SignupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SignupBody());
+    return Scaffold(
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 520),
+          child: SignupBody(),
+        ),
+      ),
+    );
   }
 }

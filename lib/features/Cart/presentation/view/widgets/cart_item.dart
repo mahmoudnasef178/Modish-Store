@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,12 +45,18 @@ class CartItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: item.productImage.startsWith('http')
-                    ? Image.network(
-                        item.productImage,
+                    ? CachedNetworkImage(
+                        imageUrl: item.productImage,
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, _, _) => Container(
+                        placeholder: (_, __) => Container(
+                          width: 100,
+                          height: 100,
+                          color: Theme.of(context).cardColor,
+                          child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+                        ),
+                        errorWidget: (_, __, ___) => Container(
                           width: 100,
                           height: 100,
                           color: Theme.of(context).cardColor,

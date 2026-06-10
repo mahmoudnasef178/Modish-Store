@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:graduation_project/features/HomePage/data/models/products/products_model.dart';
 
 class ProductRepository {
-  final Dio _dio = Dio();
+  final Dio _dio;
+  ProductRepository(this._dio);
 
   static const String _baseUrl =
       'https://gradutionapi-production.up.railway.app/api/v1';

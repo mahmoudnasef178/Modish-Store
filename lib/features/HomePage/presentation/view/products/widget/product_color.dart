@@ -18,7 +18,7 @@ class _ProductColorState extends State<ProductColor> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text("Color", style: t14.copyWith(color: primaryColorText)),
+        Text("Color", style: t14.copyWith(color: kPrimaryText(context))),
         Spacer(),
         SizedBox(
           width: context.width * .5,

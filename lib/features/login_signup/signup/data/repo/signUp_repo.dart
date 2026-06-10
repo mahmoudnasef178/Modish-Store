@@ -3,7 +3,8 @@ import 'package:graduation_project/features/login_signup/signup/data/model/signU
 import 'package:graduation_project/features/login_signup/signup/data/model/signUp_response_model.dart';
 
 class SignupRepository {
-  final Dio _dio = Dio();
+  final Dio _dio;
+  SignupRepository(this._dio);
 
   static const String _url =
       'http://ecommercetest2.runasp.net/api/Account/Register';

@@ -13,13 +13,34 @@ class UserModel {
     required this.roles,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    id: json['id'],
-    displayName: json['userName'], // ✅ استخدم userName دايماً
-    email: json['email'],
-    phoneNumber: json['phoneNumber'],
-    roles: List<String>.from(json['roles']),
-  );
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    // Priority: fullName > displayName > userName (if not email)
+    final fullName = json['fullName']?.toString();
+    final displayNameField = json['displayName']?.toString();
+    final userName = json['userName']?.toString() ?? '';
+    final email = json['email']?.toString() ?? '';
+
+    // Pick the best available name — avoid using the email as the name
+    String resolvedName;
+    if (fullName != null && fullName.isNotEmpty) {
+      resolvedName = fullName;
+    } else if (displayNameField != null && displayNameField.isNotEmpty && !displayNameField.contains('@')) {
+      resolvedName = displayNameField;
+    } else if (userName.isNotEmpty && !userName.contains('@')) {
+      resolvedName = userName;
+    } else {
+      // Fallback: extract name from email prefix
+      resolvedName = email.contains('@') ? email.split('@')[0] : userName;
+    }
+
+    return UserModel(
+      id: json['id'],
+      displayName: resolvedName,
+      email: email,
+      phoneNumber: json['phoneNumber'],
+      roles: List<String>.from(json['roles'] ?? []),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     'id': id,

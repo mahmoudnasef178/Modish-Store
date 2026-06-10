@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:graduation_project/core/colors.dart';
 import 'package:graduation_project/core/fontstyle.dart';
 import 'package:graduation_project/features/Cart/data/repo/cart_repo.dart';
@@ -17,7 +18,7 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => CartCubit(CartRepository())..getCart(),
+      create: (_) => CartCubit(GetIt.I<CartRepository>())..getCart(),
       child: const _CartView(),
     );
   }

@@ -13,7 +13,7 @@ class ProductPrice extends StatelessWidget {
         Text(
           product.name,
           style: t20.copyWith(
-            color: primaryColorText,
+            color: kPrimaryText(context),
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -21,7 +21,7 @@ class ProductPrice extends StatelessWidget {
         Text(
           "\$ ${product.price}",
           style: t20.copyWith(
-            color: primaryColorText,
+            color: kPrimaryText(context),
             fontWeight: FontWeight.w600,
           ),
         ),

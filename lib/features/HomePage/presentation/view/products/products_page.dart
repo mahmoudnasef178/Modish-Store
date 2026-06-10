@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:graduation_project/core/colors.dart';
 import 'package:graduation_project/core/fontstyle.dart';
+import 'package:graduation_project/core/responsive.dart';
 import 'package:graduation_project/features/HomePage/data/models/products/products_model.dart';
 import 'package:graduation_project/features/HomePage/data/repo/products/products_repo.dart';
 import 'package:graduation_project/features/HomePage/logic/products/products_cubit.dart';
@@ -24,7 +27,7 @@ class ProductsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-          ProductCubit(ProductRepository())
+          ProductCubit(GetIt.I<ProductRepository>())
             ..getProducts(categoryId: categoryId),
       child: _ProductsView(categoryName: categoryName, categoryId: categoryId),
     );
@@ -91,13 +94,13 @@ class _ProductsView extends StatelessWidget {
                     );
                   }
                   return GridView.builder(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Responsive.horizontalPadding(context),
                       vertical: 16,
                     ),
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
+                        SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: Responsive.gridCrossAxisCount(context),
                           childAspectRatio: 0.7,
                           crossAxisSpacing: 12,
                           mainAxisSpacing: 12,
@@ -142,11 +145,15 @@ class _ProductItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: product.pictureUrl.startsWith('http')
-                    ? Image.network(
-                        product.pictureUrl,
+                    ? CachedNetworkImage(
+                        imageUrl: product.pictureUrl,
                         fit: BoxFit.cover,
                         width: double.infinity,
-                        errorBuilder: (_, _, _) => Container(
+                        placeholder: (_, __) => Container(
+                          color: Colors.grey[200],
+                          child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+                        ),
+                        errorWidget: (_, __, ___) => Container(
                           color: Colors.grey[200],
                           child: const Icon(
                             Icons.image_not_supported,

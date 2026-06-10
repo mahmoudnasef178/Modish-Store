@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:graduation_project/core/colors.dart';
 import 'package:graduation_project/core/fontstyle.dart';
 import 'package:graduation_project/features/Cart/data/models/cart_model.dart';
@@ -20,7 +21,7 @@ class CheckoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => CheckoutCubit(OrderRepository(), CartRepository()),
+      create: (_) => CheckoutCubit(GetIt.I<OrderRepository>(), GetIt.I<CartRepository>()),
       child: _CheckoutView(cart: cart),
     );
   }

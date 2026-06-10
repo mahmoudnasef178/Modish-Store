@@ -33,12 +33,15 @@ class Custombottomnavigationbar extends StatelessWidget {
     int index,
     int currentIndex,
   ) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final activeColor = const Color(0xff9F8383);
+    final inactiveColor = isDark ? Colors.white38 : Colors.grey;
     return IconButton(
       onPressed: () => context.read<NavigationCubit>().changeIndex(index),
       icon: Icon(
         icon,
         size: 28,
-        color: currentIndex == index ? Colors.black : Colors.grey,
+        color: currentIndex == index ? activeColor : inactiveColor,
       ),
     );
   }

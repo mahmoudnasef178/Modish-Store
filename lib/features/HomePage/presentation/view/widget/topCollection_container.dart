@@ -32,64 +32,77 @@ class TopcollectionContainer extends StatelessWidget {
         height: height,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Color(0xffE2E2E2),
+          color: Theme.of(context).brightness == Brightness.dark
+              ? const Color(0xff2A2A3E)
+              : const Color(0xffE2E2E2),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
-              Gap(16),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    style: t18.copyWith(
-                      color: Color(0xff777E90),
-                      fontSize: titleHeight,
-                    ),
-                  ),
-                  Gap(22),
-                  Text(
-                    subTitle,
-                    style: t20.copyWith(
-                      color: primaryColorText,
-                      fontSize: subTitleHeight,
-                      fontWeight: FontWeight.w100,
-                    ),
-                  ),
-                ],
-              ),
-              Gap(16),
               Expanded(
-                child: Stack(
+                flex: 6,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Positioned(
-                      left: 0,
-                      right: 30,
-                      top: 40,
-                      child: Container(
-                        height: heightContainer,
-                        width: widthContainer,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(64),
-                          color: Colors.white54,
-                        ),
+                    Text(
+                      title,
+                      style: t18.copyWith(
+                        color: const Color(0xff777E90),
+                        fontSize: titleHeight,
                       ),
                     ),
-
-                    Positioned(
-                      left: 10,
-                      right: 10,
-
-                      child: SizedBox(
-                        height: imagehight,
-
-                        child: Image.asset(image, fit: BoxFit.cover),
+                    const Gap(22),
+                    Text(
+                      subTitle,
+                      style: t20.copyWith(
+                        color: kPrimaryText(context),
+                        fontSize: subTitleHeight,
+                        fontWeight: FontWeight.w100,
                       ),
                     ),
                   ],
+                ),
+              ),
+              const Gap(16),
+              Expanded(
+                flex: 4,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(8),
+                    bottomRight: Radius.circular(8),
+                  ),
+                  child: Stack(
+                    alignment: Alignment.centerRight,
+                    children: [
+                      Positioned(
+                        right: -widthContainer / 22,
+                        bottom: (height - heightContainer) / 2,
+                        child: Container(
+                          height: heightContainer,
+                          width: widthContainer,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white.withValues(alpha: 0.1)
+                                : Colors.white54,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: -40,
+                        child: Image.asset(
+                          image,
+                          height: height,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:graduation_project/core/secure_storage_helper.dart';
 import 'package:graduation_project/features/Cart/data/models/cart_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CartRepository {
-  final Dio _dio = Dio();
+  final Dio _dio;
+  CartRepository(this._dio);
   static const String _baseUrl =
       'https://gradutionapi-production.up.railway.app/api/v1';
 
   Future<String?> _getUserId() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('userId');
+    return SecureStorageHelper.getUserId();
   }
 
   Future<CartModel> getCart() async {

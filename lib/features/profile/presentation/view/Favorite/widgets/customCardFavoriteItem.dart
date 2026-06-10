@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/core/colors.dart';
@@ -44,12 +45,17 @@ class CustomCardFavoriteItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: item.pictureUrl.startsWith('http')
-                    ? Image.network(
-                        item.pictureUrl,
+                    ? CachedNetworkImage(
+                        imageUrl: item.pictureUrl,
                         height: imageSize,
                         width: imageSize,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, _, _) => Container(
+                        placeholder: (_, __) => Container(
+                          height: imageSize,
+                          width: imageSize,
+                          color: Colors.grey[200],
+                        ),
+                        errorWidget: (_, _, _) => Container(
                           height: imageSize,
                           width: imageSize,
                           color: Colors.grey[200],

@@ -35,11 +35,20 @@ class _CustomTextfieldState extends State<CustomTextfield> {
   );
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    // Always use a light fill so text (which is forced dark) is readable
+    final fillColor = isDark
+        ? const Color(0xff2C2C2E) // dark card grey
+        : const Color(0xffFFFFFF);
+    final textColor = isDark ? Colors.white : Colors.black87;
+    final iconColor = isDark ? Colors.white70 : Colors.grey;
+
     return TextFormField(
       controller: widget.controller,
       validator: widget.validator,
       keyboardType: widget.keyboardType,
       obscureText: widget.showIcon ? _isObscured : false,
+      style: TextStyle(color: textColor),
       decoration: InputDecoration(
         suffixIcon: widget.showIcon
             ? IconButton(
@@ -52,13 +61,14 @@ class _CustomTextfieldState extends State<CustomTextfield> {
                 },
                 icon: Icon(
                   _isObscured ? Icons.visibility_off : Icons.visibility,
+                  color: iconColor,
                 ),
               )
             : const SizedBox.shrink(),
-        hintStyle: const TextStyle(color: Colors.grey),
+        hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.grey),
         hintText: widget.hintText,
         filled: true,
-        fillColor: const Color(0xffFFFFFF),
+        fillColor: fillColor,
         border: _border(),
         enabledBorder: _border(),
         focusedBorder: _border(),

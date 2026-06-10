@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:gap/gap.dart';
@@ -35,12 +36,18 @@ class FeatureProductsItem extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(16),
                   child: product.pictureUrl.startsWith('http')
-                      ? Image.network(
-                          product.pictureUrl,
+                      ? CachedNetworkImage(
+                          imageUrl: product.pictureUrl,
                           fit: BoxFit.cover,
                           height: 180,
                           width: 160,
-                          errorBuilder: (_, _, _) => Container(
+                          placeholder: (_, __) => Container(
+                            color: Colors.grey[200],
+                            height: 180,
+                            width: 160,
+                            child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+                          ),
+                          errorWidget: (_, _, _) => Container(
                             color: Colors.grey[200],
                             height: 180,
                             width: 160,
@@ -61,7 +68,7 @@ class FeatureProductsItem extends StatelessWidget {
               const Gap(8),
               Text(
                 product.name,
-                style: t14.copyWith(color: secondaryColorText),
+                style: t14.copyWith(color: kSecondaryText(context)),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -72,7 +79,7 @@ class FeatureProductsItem extends StatelessWidget {
                   Text(
                     '\$ ${product.price}',
                     style: t14.copyWith(
-                      color: primaryColorText,
+                      color: kPrimaryText(context),
                       fontWeight: FontWeight.w900,
                     ),
                   ),
@@ -82,7 +89,7 @@ class FeatureProductsItem extends StatelessWidget {
                       const SizedBox(width: 2),
                       Text(
                         product.rate.toString(),
-                        style: t12.copyWith(color: secondaryColorText),
+                        style: t12.copyWith(color: kSecondaryText(context)),
                       ),
                     ],
                   ),

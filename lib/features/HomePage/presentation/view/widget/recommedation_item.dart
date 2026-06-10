@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:graduation_project/core/colors.dart';
@@ -26,7 +27,7 @@ class RecommedationItem extends StatelessWidget {
           height: 68,
           width: 240,
           decoration: BoxDecoration(
-            color: const Color(0xffFFFFFF),
+            color: kCardColor(context),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
@@ -36,12 +37,17 @@ class RecommedationItem extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(8),
                   child: product.pictureUrl.startsWith('http')
-                      ? Image.network(
-                          product.pictureUrl,
+                      ? CachedNetworkImage(
+                          imageUrl: product.pictureUrl,
                           height: 68,
                           width: 68,
                           fit: BoxFit.cover,
-                          errorBuilder: (_, _, _) => Container(
+                          placeholder: (_, __) => Container(
+                            color: Colors.grey[200],
+                            height: 68,
+                            width: 68,
+                          ),
+                          errorWidget: (_, _, _) => Container(
                             color: Colors.grey[200],
                             height: 68,
                             width: 68,
@@ -64,7 +70,7 @@ class RecommedationItem extends StatelessWidget {
                   children: [
                     Text(
                       product.name,
-                      style: t16.copyWith(color: secondaryColorText),
+                      style: t16.copyWith(color: kSecondaryText(context)),
                       softWrap: true,
                       maxLines: 2,
                     ),
@@ -72,7 +78,7 @@ class RecommedationItem extends StatelessWidget {
                     Text(
                       '\$ ${product.price}',
                       style: t16.copyWith(
-                        color: primaryColorText,
+                        color: kPrimaryText(context),
                         fontWeight: FontWeight.w900,
                       ),
                     ),

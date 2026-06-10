@@ -31,13 +31,17 @@ class RowPayment extends StatelessWidget {
             width: 56,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(64),
-              color: const Color(0xffE1E1E1),
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? const Color(0xff2A2A3E)
+                  : const Color(0xffE1E1E1),
             ),
             child: SvgPicture.asset(
               "assets/icons/Cart Icon.svg",
               height: 22,
               width: 26,
               fit: BoxFit.scaleDown,
+              colorFilter: ColorFilter.mode(
+                  kPrimaryText(context), BlendMode.srcIn),
             ),
           ),
         ),
@@ -54,7 +58,6 @@ class _SuccessDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),

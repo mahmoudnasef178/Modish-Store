@@ -11,13 +11,15 @@ import 'package:graduation_project/features/login_signup/login/presentation/view
 import 'package:graduation_project/features/login_signup/login/presentation/view/widget/custom_textField.dart';
 import 'package:graduation_project/features/login_signup/signup/presentation/view/signup_page.dart';
 
+import 'package:graduation_project/core/di/service_locator.dart';
+
 class LoginBody extends StatelessWidget {
   const LoginBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => LoginCubit(LoginRepository()),
+      create: (_) => LoginCubit(getIt<LoginRepository>()),
       child: const _LoginForm(),
     );
   }

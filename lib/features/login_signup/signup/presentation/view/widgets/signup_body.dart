@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:graduation_project/core/colors.dart';
 import 'package:graduation_project/core/fontstyle.dart';
 import 'package:graduation_project/features/HomePage/presentation/view/homepage.dart';
@@ -16,7 +17,7 @@ class SignupBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => SignupCubit(SignupRepository()),
+      create: (_) => SignupCubit(GetIt.I<SignupRepository>()),
       child: const _SignupForm(),
     );
   }
@@ -102,10 +103,10 @@ class _SignupFormState extends State<_SignupForm> {
                         width: backBtnSize,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(64),
-                          color: Colors.white,
+                          color: Colors.transparent,
                         ),
                         child: Padding(
-                          padding: EdgeInsets.only(left: size.width * 0.02),
+                          padding: EdgeInsets.only(left: size.width * 0.00),
                           child: Icon(Icons.arrow_back_ios, size: backIconSize),
                         ),
                       ),
@@ -156,8 +157,9 @@ class _SignupFormState extends State<_SignupForm> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
                     }
-                    if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$')
-                        .hasMatch(value)) {
+                    if (!RegExp(
+                      r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$',
+                    ).hasMatch(value)) {
                       return 'Please enter a valid email';
                     }
                     return null;
@@ -170,15 +172,17 @@ class _SignupFormState extends State<_SignupForm> {
                 SizedBox(height: size.height * 0.015),
                 BlocBuilder<SignupCubit, SignupState>(
                   builder: (context, state) {
-                    final isVisible =
-                        context.read<SignupCubit>().isPasswordVisible;
+                    final isVisible = context
+                        .read<SignupCubit>()
+                        .isPasswordVisible;
                     return CustomTextfield(
                       hintText: "Password",
                       controller: _passwordController,
                       showIcon: true,
                       obscureText: !isVisible,
-                      onIconTap: () =>
-                          context.read<SignupCubit>().togglePasswordVisibility(),
+                      onIconTap: () => context
+                          .read<SignupCubit>()
+                          .togglePasswordVisibility(),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your password';

@@ -22,7 +22,7 @@ class CustomFrame extends StatelessWidget {
           Text(
             text1,
             style: t18.copyWith(
-              color: primaryColorText,
+              color: kPrimaryText(context),
               fontWeight: FontWeight.w900,
             ),
           ),
@@ -31,7 +31,7 @@ class CustomFrame extends StatelessWidget {
             child: Text(
               text2,
               style: t16.copyWith(
-                color: secondaryColorText,
+                color: kSecondaryText(context),
                 fontWeight: FontWeight.w900,
               ),
             ),

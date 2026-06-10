@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:graduation_project/core/fontstyle.dart';
+import 'package:graduation_project/core/responsive.dart';
 import 'package:graduation_project/core/utils.dart';
 import 'package:graduation_project/features/HomePage/logic/Navigation_Cubit/navigation_cubit.dart';
 import 'package:graduation_project/features/HomePage/logic/Navigation_Cubit/navigation_state.dart';
@@ -20,135 +21,237 @@ import 'package:graduation_project/features/profile/presentation/view/category/c
 class HomepageBody extends StatelessWidget {
   const HomepageBody({super.key, required this.globalKey});
   final GlobalKey<ScaffoldState> globalKey;
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0),
-            child: BlocProvider(
-              create: (context) => NavigationCubit(),
-              child: BlocBuilder<NavigationCubit, NavigationState>(
-                builder: (context, state) {
-                  return CustomAppbar(
-                    leftIcon: "assets/icons/Drawer.svg",
-                    title: "Modish",
-                    rightIcon: "assets/icons/Notification.svg",
-                    showThemeToggle: true,
-                    leftIconOnTap: () {
-                      globalKey.currentState!.openDrawer();
-                    },
-                    rightIconOnTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NotificationView(),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height * .04),
+    final hPad = Responsive.horizontalPadding(context);
+    final isMobile = Responsive.isMobile(context);
 
-          Stack(
+    return SingleChildScrollView(
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: Responsive.maxContentWidth(context),
+          ),
+          child: Column(
             children: [
               Padding(
-                padding: EdgeInsetsGeometry.symmetric(horizontal: 32),
-                child: Image.asset("assets/images/Mask Group (1).png"),
-              ),
-              Positioned(
-                right: 40,
-                top: 30,
-                child: Text(
-                  "Autumn\nCollection\n2025",
-                  style: t22.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
+                padding: EdgeInsets.symmetric(horizontal: hPad),
+                child: BlocProvider(
+                  create: (context) => NavigationCubit(),
+                  child: BlocBuilder<NavigationCubit, NavigationState>(
+                    builder: (context, state) {
+                      return CustomAppbar(
+                        leftIcon: "assets/icons/Drawer.svg",
+                        title: "Modish",
+                        rightIcon: "assets/icons/Notification.svg",
+                        showThemeToggle: true,
+                        showIcon: true,
+                        // On mobile → open drawer; on wider screens → no-op (rail handles nav)
+                        leftIconOnTap: isMobile
+                            ? () => globalKey.currentState!.openDrawer()
+                            : null,
+                        rightIconOnTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NotificationView(),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
               ),
+              SizedBox(height: MediaQuery.of(context).size.height * .04),
+
+              // ── Hero Banner ─────────────────────────────────────────
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: hPad),
+                child: AspectRatio(
+                  aspectRatio: Responsive.isMobile(context)
+                      ? 343 / 160
+                      : 343 / 80,
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.asset(
+                            "assets/images/Mask Group (1).png",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        right: 16,
+                        top: Responsive.value(
+                          context,
+                          mobile: 20,
+                          tablet: 30,
+                          desktop: 40,
+                        ),
+                        child: Text(
+                          "Autumn\nCollection\n2025",
+                          style: t22.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                            fontSize: Responsive.value(
+                              context,
+                              mobile: 20,
+                              tablet: 24,
+                              desktop: 28,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              Gap(context.height * .03),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: hPad),
+                child: CustomFrame(
+                  text1: "Category",
+                  text2: "Show all",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategorySection(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Gap(context.height * .02),
+              ListviewCategory(),
+              Gap(context.height * .03),
+
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: hPad),
+                child: CustomFrame(
+                  text1: "Feature Products",
+                  text2: "Show all",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProductsPage(
+                          categoryId: '',
+                          categoryName: 'All Products',
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Gap(context.height * .02),
+              ListviewFeatureProducts(),
+              Gap(context.height * .03),
+
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: hPad),
+                child: NewCollectionCard(),
+              ),
+              Gap(context.height * .04),
+
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: hPad),
+                child: CustomFrame(
+                  text1: "Recommended",
+                  text2: "Show all",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RecommendedPage(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Gap(context.height * .02),
+              RecommendationListview(),
+              Gap(context.height * .04),
+
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: hPad),
+                child: CustomFrame(text1: "Top Collection", text2: ''),
+              ),
+              Gap(context.height * .03),
+
+              // ── Top Collection: stacked on mobile, side-by-side on wider ──
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: hPad),
+                child: isMobile
+                    ? Column(
+                        children: [
+                          TopcollectionContainer(
+                            image: "assets/images/image48.png",
+                            height: 200,
+                            title: "Sale up to 40%",
+                            subTitle: "FOR SLIM \n& BEAUTY",
+                            imagehight: 220,
+                            titleHeight: 18,
+                            subTitleHeight: 24,
+                            heightContainer: 150,
+                            widthContainer: 150,
+                          ),
+                          Gap(context.height * .04),
+                          TopcollectionContainer(
+                            image: "assets/images/image69.png",
+                            height: 260,
+                            title: "Summer Collection 2025",
+                            subTitle: "Most Comfortable\n& fabulous \n design ",
+                            imagehight: 280,
+                            titleHeight: 14,
+                            subTitleHeight: 20,
+                            heightContainer: 180,
+                            widthContainer: 180,
+                          ),
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          Expanded(
+                            child: TopcollectionContainer(
+                              image: "assets/images/image48.png",
+                              height: 460,
+                              title: "Sale up to 40%",
+                              subTitle: "FOR SLIM \n& BEAUTY",
+                              imagehight: 360,
+                              titleHeight: 18,
+                              subTitleHeight: 22,
+                              heightContainer: 130,
+                              widthContainer: 130,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: TopcollectionContainer(
+                              image: "assets/images/image69.png",
+                              height: 200,
+                              title: "Summer Collection 2025",
+                              subTitle:
+                                  "Most Comfortable\n& fabulous \n design ",
+                              imagehight: 240,
+                              titleHeight: 14,
+                              subTitleHeight: 16,
+                              heightContainer: 130,
+                              widthContainer: 130,
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
+              Gap(context.height * .04),
             ],
           ),
-          Gap(context.height * .03),
-          CustomFrame(
-            text1: "Category",
-            text2: "Show all",
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CategorySection()),
-              );
-            },
-          ),
-          Gap(context.height * .03),
-          ListviewCategory(),
-          Gap(context.height * .03),
-          CustomFrame(
-            text1: "Feature Products",
-            text2: "Show all",
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ProductsPage(
-                    categoryId: '',
-                    categoryName: 'All Products',
-                  ),
-                ),
-              );
-            },
-          ),
-          Gap(context.height * .03),
-          ListviewFeatureProducts(),
-          Gap(context.height * .03),
-          NewCollectionCard(),
-          Gap(context.height * .04),
-          CustomFrame(
-            text1: "Recommended",
-            text2: "Show all",
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const RecommendedPage(),
-                ),
-              );
-            },
-          ),
-          Gap(context.height * .03),
-          RecommendationListview(),
-          Gap(context.height * .04),
-          CustomFrame(text1: "Top Collection", text2: ''),
-          Gap(context.height * .03),
-          TopcollectionContainer(
-            image: "assets/images/image48.png",
-            height: 165,
-            title: "Sale up to 40%",
-            subTitle: "FOR SLIM \n& BEAUTY",
-            imagehight: 180,
-            titleHeight: 18,
-            subTitleHeight: 26,
-            heightContainer: 120,
-            widthContainer: 120,
-          ),
-          Gap(context.height * .04),
-          TopcollectionContainer(
-            image: "assets/images/image69.png",
-            height: 240,
-            title: "Summer Collection 2025",
-            subTitle: "Most Comfortable\n& fabulous \n design ",
-            imagehight: 240,
-            titleHeight: 14,
-            subTitleHeight: 18,
-            heightContainer: 120,
-            widthContainer: 140,
-          ),
-          Gap(context.height * .04),
-        ],
+        ),
       ),
     );
   }

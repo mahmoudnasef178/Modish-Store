@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:graduation_project/core/utils.dart';
 import 'package:graduation_project/features/HomePage/data/repo/products/products_repo.dart';
 import 'package:graduation_project/features/HomePage/logic/products/products_cubit.dart';
@@ -12,7 +13,7 @@ class RecommendationListview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ProductCubit(ProductRepository())..getRecommended(),
+      create: (_) => ProductCubit(GetIt.I<ProductRepository>())..getRecommended(),
       child: SizedBox(
         height: context.height * .12,
         child: BlocBuilder<ProductCubit, ProductState>(

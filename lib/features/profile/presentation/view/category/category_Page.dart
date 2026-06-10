@@ -130,7 +130,7 @@ class _CategoryItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor, // ✅ dark mode
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.grey.shade200),
+          border: Border.all(color: Theme.of(context).dividerColor),
         ),
         padding: EdgeInsets.symmetric(
           vertical: size.height * 0.025,
@@ -162,7 +162,7 @@ class _CategoryItem extends StatelessWidget {
               style: TextStyle(
                 fontSize: nameFontSize,
                 fontWeight: FontWeight.w600,
-                color: primaryColorText,
+                color: kPrimaryText(context),
               ),
             ),
           ],

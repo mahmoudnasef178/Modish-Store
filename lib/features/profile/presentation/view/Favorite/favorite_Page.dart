@@ -27,7 +27,7 @@ class FavoriteViewPage extends StatelessWidget {
             ),
           ),
         ),
-        leadingWidth: size.width * 0.15,
+        leadingWidth: size.width * 0.12,
         title: Text('Favorite', style: TextStyle(fontSize: fontSize)),
         centerTitle: true,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,

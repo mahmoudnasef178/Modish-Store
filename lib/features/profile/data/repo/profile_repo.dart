@@ -1,15 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
+import 'package:graduation_project/core/secure_storage_helper.dart';
 import 'package:graduation_project/features/profile/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileRepository {
   static const _baseUrl = 'http://ecommercetest2.runasp.net/api/ManageUser';
 
   Future<String?> _getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token');
+    return SecureStorageHelper.getToken();
   }
 
   String? _extractUserIdFromToken(String token) {
@@ -37,7 +36,10 @@ class ProfileRepository {
     final token = await _getToken();
     if (token == null) throw Exception('No token found');
 
-    final userId = _extractUserIdFromToken(token);
+    String? userId = _extractUserIdFromToken(token);
+    if (userId == null || userId.isEmpty) {
+      userId = await SecureStorageHelper.getUserId();
+    }
 
     final response = await http.get(
       Uri.parse('$_baseUrl/GetAllUsers'),

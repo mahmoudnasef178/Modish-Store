@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:graduation_project/features/HomePage/data/repo/products/products_repo.dart';
 import 'package:graduation_project/features/HomePage/logic/products/products_cubit.dart';
 import 'package:graduation_project/features/HomePage/logic/products/products_state.dart';
@@ -20,7 +21,7 @@ class Customgridview extends StatelessWidget {
 
     return BlocProvider(
       create: (_) =>
-          ProductCubit(ProductRepository())
+          ProductCubit(GetIt.I<ProductRepository>())
             ..getProducts(categoryId: categoryId, search: search),
       child: BlocBuilder<ProductCubit, ProductState>(
         builder: (context, state) {

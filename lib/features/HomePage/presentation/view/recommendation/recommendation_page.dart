@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:graduation_project/core/colors.dart';
 import 'package:graduation_project/core/fontstyle.dart';
 import 'package:graduation_project/features/HomePage/data/repo/products/products_repo.dart';
@@ -13,22 +15,31 @@ class RecommendedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ProductCubit(ProductRepository())..getRecommended(),
+      create: (_) => ProductCubit(GetIt.I<ProductRepository>())..getRecommended(),
       child: Scaffold(
-        backgroundColor: const Color(0xffF8F8F8),
         appBar: AppBar(
-          backgroundColor: const Color(0xffF8F8F8),
           elevation: 0,
           leading: GestureDetector(
             onTap: () => Navigator.pop(context),
-            child: const Icon(Icons.arrow_back_ios, color: Colors.black),
-          ),
-          title: Text(
-            "Recommended",
-            style: t18.copyWith(
-              color: primaryColorText,
-              fontWeight: FontWeight.w700,
+            child: Builder(
+              builder: (context) {
+                return Icon(
+                  Icons.arrow_back_ios,
+                  color: kPrimaryText(context),
+                );
+              }
             ),
+          ),
+          title: Builder(
+            builder: (context) {
+              return Text(
+                "Recommended",
+                style: t18.copyWith(
+                  color: kPrimaryText(context),
+                  fontWeight: FontWeight.w700,
+                ),
+              );
+            }
           ),
           centerTitle: true,
         ),
@@ -76,7 +87,7 @@ class RecommendedPage extends StatelessWidget {
                     ),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: kCardColor(context),
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
@@ -97,11 +108,15 @@ class RecommendedPage extends StatelessWidget {
                                   top: Radius.circular(16),
                                 ),
                                 child: product.pictureUrl.startsWith('http')
-                                    ? Image.network(
-                                        product.pictureUrl,
+                                    ? CachedNetworkImage(
+                                        imageUrl: product.pictureUrl,
                                         fit: BoxFit.cover,
                                         width: double.infinity,
-                                        errorBuilder:
+                                        placeholder: (_, __) => Container(
+                                          color: Colors.grey[200],
+                                          child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+                                        ),
+                                        errorWidget:
                                             (_, _, _) =>
                                                 Container(
                                                   color: Colors.grey[200],
@@ -127,7 +142,7 @@ class RecommendedPage extends StatelessWidget {
                                 Text(
                                   product.name,
                                   style: t14.copyWith(
-                                    color: primaryColorText,
+                                    color: kPrimaryText(context),
                                     fontWeight: FontWeight.w600,
                                   ),
                                   maxLines: 1,
@@ -137,7 +152,7 @@ class RecommendedPage extends StatelessWidget {
                                 Text(
                                   product.categoryName,
                                   style: t12.copyWith(
-                                    color: secondaryColorText,
+                                    color: kSecondaryText(context),
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -150,7 +165,7 @@ class RecommendedPage extends StatelessWidget {
                                     Text(
                                       '\$ ${product.price}',
                                       style: t14.copyWith(
-                                        color: primaryColorText,
+                                        color: kPrimaryText(context),
                                         fontWeight: FontWeight.w900,
                                       ),
                                     ),
@@ -165,7 +180,7 @@ class RecommendedPage extends StatelessWidget {
                                         Text(
                                           product.rate.toString(),
                                           style: t12.copyWith(
-                                            color: secondaryColorText,
+                                            color: kSecondaryText(context),
                                           ),
                                         ),
                                       ],
