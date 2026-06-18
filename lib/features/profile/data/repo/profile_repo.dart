@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
-import 'package:graduation_project/core/secure_storage_helper.dart';
-import 'package:graduation_project/features/profile/data/models/user_model.dart';
+import 'package:modish_store/core/secure_storage_helper.dart';
+import 'package:modish_store/features/profile/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileRepository {

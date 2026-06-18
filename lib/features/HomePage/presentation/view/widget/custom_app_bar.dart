@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/core/fontstyle.dart';
-import 'package:graduation_project/core/theme/theme_cubit.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/core/fontstyle.dart';
+import 'package:modish_store/core/theme/theme_cubit.dart';
 
 class CustomAppbar extends StatelessWidget {
   const CustomAppbar({

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
-import 'package:graduation_project/features/HomePage/data/repo/products/products_repo.dart';
-import 'package:graduation_project/features/HomePage/logic/Navigation_Cubit/navigation_cubit.dart';
-import 'package:graduation_project/features/HomePage/logic/products/products_cubit.dart';
-import 'package:graduation_project/features/HomePage/logic/products/products_state.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/custom_AppBar.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/products/widget/featureProductsItem.dart';
-import 'package:graduation_project/features/search/presentation/view/widgets/customSearchTextField.dart';
+import 'package:modish_store/features/HomePage/data/repo/products/products_repo.dart';
+import 'package:modish_store/features/HomePage/logic/Navigation_Cubit/navigation_cubit.dart';
+import 'package:modish_store/features/HomePage/logic/products/products_cubit.dart';
+import 'package:modish_store/features/HomePage/logic/products/products_state.dart';
+import 'package:modish_store/features/HomePage/presentation/view/widget/custom_app_bar.dart';
+import 'package:modish_store/features/HomePage/presentation/view/products/widget/feature_products_item.dart';
+import 'package:modish_store/features/search/presentation/view/widgets/custom_search_text_field.dart';
 
 class Searchviewpage extends StatelessWidget {
   const Searchviewpage({super.key});

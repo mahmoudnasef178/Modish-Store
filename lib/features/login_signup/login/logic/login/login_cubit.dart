@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/features/login_signup/login/data/model/login_request_model.dart';
-import 'package:graduation_project/features/login_signup/login/data/repo/login_repo.dart';
-import 'package:graduation_project/features/login_signup/login/logic/login/login_state.dart';
-import 'package:graduation_project/core/secure_storage_helper.dart';
+import 'package:modish_store/features/login_signup/login/data/model/login_request_model.dart';
+import 'package:modish_store/features/login_signup/login/data/repo/login_repo.dart';
+import 'package:modish_store/features/login_signup/login/logic/login/login_state.dart';
+import 'package:modish_store/core/secure_storage_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginCubit extends Cubit<LoginState> {

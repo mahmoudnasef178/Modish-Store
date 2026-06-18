@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/core/fontstyle.dart';
-import 'package:graduation_project/features/Cart/data/models/cart_model.dart';
-import 'package:graduation_project/features/Cart/presentation/view/checkout_page.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/core/fontstyle.dart';
+import 'package:modish_store/features/Cart/data/models/cart_model.dart';
+import 'package:modish_store/features/Cart/presentation/view/checkout/checkout_page.dart';
 
 class BottomSummary extends StatelessWidget {
   final CartModel cart;

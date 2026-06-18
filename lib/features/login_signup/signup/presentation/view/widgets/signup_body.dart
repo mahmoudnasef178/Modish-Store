@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/core/fontstyle.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/homepage.dart';
-import 'package:graduation_project/features/login_signup/login/presentation/view/widget/custom_buttom_login_signup.dart';
-import 'package:graduation_project/features/login_signup/login/presentation/view/widget/custom_text.dart';
-import 'package:graduation_project/features/login_signup/login/presentation/view/widget/custom_textField.dart';
-import 'package:graduation_project/features/login_signup/signup/data/repo/signUp_repo.dart';
-import 'package:graduation_project/features/login_signup/signup/logic/sign_up/sign_up_cubit.dart';
-import 'package:graduation_project/features/login_signup/signup/logic/sign_up/sign_up_state.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/core/fontstyle.dart';
+import 'package:modish_store/features/HomePage/presentation/view/home/homepage.dart';
+import 'package:modish_store/features/login_signup/login/presentation/view/widget/custom_buttom_login_signup.dart';
+import 'package:modish_store/features/login_signup/login/presentation/view/widget/custom_text.dart';
+import 'package:modish_store/features/login_signup/login/presentation/view/widget/custom_text_field.dart';
+import 'package:modish_store/features/login_signup/signup/data/repo/signUp_repo.dart';
+import 'package:modish_store/features/login_signup/signup/logic/sign_up/sign_up_cubit.dart';
+import 'package:modish_store/features/login_signup/signup/logic/sign_up/sign_up_state.dart';
 
 class SignupBody extends StatelessWidget {
   const SignupBody({super.key});

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/features/HomePage/data/models/category/category_model.dart';
-import 'package:graduation_project/features/HomePage/data/repo/category/category_repo.dart';
-import 'package:graduation_project/features/HomePage/logic/category/category_cubit.dart';
-import 'package:graduation_project/features/HomePage/logic/category/category_state.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/products/products_page.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/custom_AppBar.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/features/HomePage/data/models/category/category_model.dart';
+import 'package:modish_store/features/HomePage/data/repo/category/category_repo.dart';
+import 'package:modish_store/features/HomePage/logic/category/category_cubit.dart';
+import 'package:modish_store/features/HomePage/logic/category/category_state.dart';
+import 'package:modish_store/features/HomePage/presentation/view/products/products_page.dart';
+import 'package:modish_store/features/HomePage/presentation/view/widget/custom_app_bar.dart';
 
 class CategorySection extends StatelessWidget {
   const CategorySection({super.key});

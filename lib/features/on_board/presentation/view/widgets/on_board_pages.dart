@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/features/on%20board/presentation/view/widgets/custom_board.dart';
+import 'package:modish_store/features/on_board/presentation/view/widgets/custom_board.dart';
 
 class OnBoardPages extends StatelessWidget {
   const OnBoardPages({super.key, required this.controller});

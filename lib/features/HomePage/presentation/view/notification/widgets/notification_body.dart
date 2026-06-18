@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/core/fontstyle.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/custom_AppBar.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/core/fontstyle.dart';
+import 'package:modish_store/features/HomePage/presentation/view/widget/custom_app_bar.dart';
 
 class NotificationBody extends StatelessWidget {
   const NotificationBody({super.key});

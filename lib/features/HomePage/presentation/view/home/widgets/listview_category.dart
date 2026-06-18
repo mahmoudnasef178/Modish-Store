@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/core/utils.dart';
-import 'package:graduation_project/features/HomePage/data/repo/category/category_repo.dart';
-import 'package:graduation_project/features/HomePage/logic/category/category_cubit.dart';
-import 'package:graduation_project/features/HomePage/logic/category/category_state.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/category_item.dart';
+import 'package:modish_store/core/utils.dart';
+import 'package:modish_store/features/HomePage/data/repo/category/category_repo.dart';
+import 'package:modish_store/features/HomePage/logic/category/category_cubit.dart';
+import 'package:modish_store/features/HomePage/logic/category/category_state.dart';
+import 'package:modish_store/features/HomePage/presentation/view/home/widgets/category_item.dart';
 
 class ListviewCategory extends StatelessWidget {
   const ListviewCategory({super.key});

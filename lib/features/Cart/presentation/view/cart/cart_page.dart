@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/core/fontstyle.dart';
-import 'package:graduation_project/features/Cart/data/repo/cart_repo.dart';
-import 'package:graduation_project/features/Cart/logic/cart_cubit/cart_cubit.dart';
-import 'package:graduation_project/features/Cart/logic/cart_cubit/cart_state.dart';
-import 'package:graduation_project/features/Cart/presentation/view/widgets/bottom_summary.dart';
-import 'package:graduation_project/features/Cart/presentation/view/widgets/cart_item.dart';
-import 'package:graduation_project/features/HomePage/logic/Navigation_Cubit/navigation_cubit.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/custom_AppBar.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/core/fontstyle.dart';
+import 'package:modish_store/features/Cart/data/repo/cart_repo.dart';
+import 'package:modish_store/features/Cart/logic/cart_cubit/cart_cubit.dart';
+import 'package:modish_store/features/Cart/logic/cart_cubit/cart_state.dart';
+import 'package:modish_store/features/Cart/presentation/view/cart/widgets/bottom_summary.dart';
+import 'package:modish_store/features/Cart/presentation/view/cart/widgets/cart_item.dart';
+import 'package:modish_store/features/HomePage/logic/Navigation_Cubit/navigation_cubit.dart';
+import 'package:modish_store/features/HomePage/presentation/view/widget/custom_app_bar.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});

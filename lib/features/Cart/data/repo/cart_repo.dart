@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:graduation_project/core/secure_storage_helper.dart';
-import 'package:graduation_project/features/Cart/data/models/cart_model.dart';
+import 'package:modish_store/core/secure_storage_helper.dart';
+import 'package:modish_store/features/Cart/data/models/cart_model.dart';
 
 class CartRepository {
   final Dio _dio;

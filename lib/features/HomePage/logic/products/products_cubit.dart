@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/features/HomePage/data/repo/products/products_repo.dart';
-import 'package:graduation_project/features/HomePage/logic/products/products_state.dart';
+import 'package:modish_store/features/HomePage/data/repo/products/products_repo.dart';
+import 'package:modish_store/features/HomePage/logic/products/products_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
   final ProductRepository _repository;

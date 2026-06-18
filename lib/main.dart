@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/core/theme/app_theme.dart';
-import 'package:graduation_project/core/theme/theme_cubit.dart';
-import 'package:graduation_project/features/Cart/data/repo/cart_repo.dart';
-import 'package:graduation_project/features/Cart/logic/cart_cubit/cart_cubit.dart';
-import 'package:graduation_project/features/HomePage/data/repo/Favorite/favorite_repo.dart';
-import 'package:graduation_project/features/login_signup/login/logic/login/login_cubit.dart';
-import 'package:graduation_project/features/splash/presentation/view/splash_view.dart';
-import 'package:graduation_project/core/bloc_observer.dart';
-import 'package:graduation_project/core/di/service_locator.dart';
-import 'package:graduation_project/features/HomePage/logic/Favorite_Cubit/favorite_cubit.dart';
+import 'package:modish_store/core/theme/app_theme.dart';
+import 'package:modish_store/core/theme/theme_cubit.dart';
+import 'package:modish_store/features/Cart/data/repo/cart_repo.dart';
+import 'package:modish_store/features/Cart/logic/cart_cubit/cart_cubit.dart';
+import 'package:modish_store/features/HomePage/data/repo/Favorite/favorite_repo.dart';
+import 'package:modish_store/features/login_signup/login/logic/login/login_cubit.dart';
+import 'package:modish_store/features/splash/presentation/view/splash_view.dart';
+import 'package:modish_store/core/bloc_observer.dart';
+import 'package:modish_store/core/di/service_locator.dart';
+import 'package:modish_store/features/HomePage/logic/Favorite_Cubit/favorite_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

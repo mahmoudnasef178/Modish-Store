@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/features/login_signup/login/presentation/view/login_page.dart';
-import 'package:graduation_project/features/on%20board/presentation/view/widgets/custom_container_boarding.dart';
-import 'package:graduation_project/features/on%20board/presentation/view/widgets/custom_emojy.dart';
-import 'package:graduation_project/features/on%20board/presentation/view/widgets/on_board_pages.dart';
+import 'package:modish_store/features/login_signup/login/presentation/view/login_page.dart';
+import 'package:modish_store/features/on_board/presentation/view/widgets/custom_container_boarding.dart';
+import 'package:modish_store/features/on_board/presentation/view/widgets/custom_emojy.dart';
+import 'package:modish_store/features/on_board/presentation/view/widgets/on_board_pages.dart';
 
 class OnBoardBody extends StatefulWidget {
   const OnBoardBody({super.key});

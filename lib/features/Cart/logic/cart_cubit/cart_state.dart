@@ -1,4 +1,4 @@
-import 'package:graduation_project/features/Cart/data/models/cart_model.dart';
+import 'package:modish_store/features/Cart/data/models/cart_model.dart';
 
 abstract class CartState {}
 

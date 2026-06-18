@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/core/fontstyle.dart';
-import 'package:graduation_project/features/Cart/data/models/cart_model.dart';
-import 'package:graduation_project/features/Cart/logic/cart_cubit/cart_cubit.dart';
-import 'package:graduation_project/features/HomePage/data/models/products/products_model.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/products/widget/featureProductDetails.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/core/fontstyle.dart';
+import 'package:modish_store/features/Cart/data/models/cart_model.dart';
+import 'package:modish_store/features/Cart/logic/cart_cubit/cart_cubit.dart';
+import 'package:modish_store/features/HomePage/data/models/products/products_model.dart';
+import 'package:modish_store/features/HomePage/presentation/view/products/widget/feature_product_details.dart';
 
 class CartItem extends StatelessWidget {
   final CartItemModel item;
@@ -50,13 +50,15 @@ class CartItem extends StatelessWidget {
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
-                        placeholder: (_, __) => Container(
+                        placeholder: (_, _) => Container(
                           width: 100,
                           height: 100,
                           color: Theme.of(context).cardColor,
-                          child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+                          child: const Center(
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
                         ),
-                        errorWidget: (_, __, ___) => Container(
+                        errorWidget: (_, _, _) => Container(
                           width: 100,
                           height: 100,
                           color: Theme.of(context).cardColor,

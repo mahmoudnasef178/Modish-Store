@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/notification_View.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/custom_ListTile.dart';
-import 'package:graduation_project/features/login_signup/login/logic/login/login_cubit.dart';
-import 'package:graduation_project/features/profile/about%20us/about_us.dart';
-import 'package:graduation_project/features/profile/presentation/view/Favorite/favorite_Page.dart';
-import 'package:graduation_project/features/profile/presentation/view/Support/email_chooser_sheet.dart';
-import 'package:graduation_project/features/profile/presentation/view/category/category_Page.dart';
-import 'package:graduation_project/features/profile/presentation/view/profile_Screen.dart';
-import 'package:graduation_project/features/splash/presentation/view/splash_view.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/features/HomePage/presentation/view/notification/notification_view.dart';
+import 'package:modish_store/features/HomePage/presentation/view/widget/custom_list_tile.dart';
+import 'package:modish_store/features/login_signup/login/logic/login/login_cubit.dart';
+import 'package:modish_store/features/profile/about_us/about_us.dart';
+import 'package:modish_store/features/profile/presentation/view/Favorite/favorite_page.dart';
+import 'package:modish_store/features/profile/presentation/view/Support/email_chooser_sheet.dart';
+import 'package:modish_store/features/HomePage/presentation/view/category/category_page.dart';
+import 'package:modish_store/features/profile/presentation/view/profile_screen.dart';
+import 'package:modish_store/features/splash/presentation/view/splash_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/features/HomePage/data/models/Favorite/favorite_model.dart';
-import 'package:graduation_project/features/HomePage/data/models/products/products_model.dart';
-import 'package:graduation_project/features/HomePage/data/repo/Favorite/favorite_repo.dart';
+import 'package:modish_store/features/HomePage/data/models/Favorite/favorite_model.dart';
+import 'package:modish_store/features/HomePage/data/models/products/products_model.dart';
+import 'package:modish_store/features/HomePage/data/repo/Favorite/favorite_repo.dart';
 import 'favorite_state.dart';
 
 class FavoriteCubit extends Cubit<FavoriteState> {

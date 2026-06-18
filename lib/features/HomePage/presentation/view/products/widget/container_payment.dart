@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/core/fontstyle.dart';
-import 'package:graduation_project/core/utils.dart';
-import 'package:graduation_project/features/Cart/data/models/cart_model.dart';
-import 'package:graduation_project/features/Cart/presentation/view/checkout_page.dart';
-import 'package:graduation_project/features/HomePage/data/models/products/products_model.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/core/fontstyle.dart';
+import 'package:modish_store/core/utils.dart';
+import 'package:modish_store/features/Cart/data/models/cart_model.dart';
+import 'package:modish_store/features/Cart/presentation/view/checkout/checkout_page.dart';
+import 'package:modish_store/features/HomePage/data/models/products/products_model.dart';
 
 class ContainerPayment extends StatelessWidget {
   const ContainerPayment({super.key, required this.product});

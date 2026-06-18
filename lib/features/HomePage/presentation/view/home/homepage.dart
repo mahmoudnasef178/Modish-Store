@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/features/Cart/presentation/view/cartPage.dart';
-import 'package:graduation_project/features/HomePage/logic/Navigation_Cubit/navigation_cubit.dart';
-import 'package:graduation_project/features/HomePage/logic/Navigation_Cubit/navigation_state.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/customBottomNavigationBar.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/custom_Drawer.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/homePage_body.dart';
-import 'package:graduation_project/features/profile/presentation/view/ProfileViewPage.dart';
-import 'package:graduation_project/features/search/presentation/view/searchViewPage.dart';
+import 'package:modish_store/features/Cart/presentation/view/cart/cart_page.dart';
+import 'package:modish_store/features/HomePage/logic/Navigation_Cubit/navigation_cubit.dart';
+import 'package:modish_store/features/HomePage/logic/Navigation_Cubit/navigation_state.dart';
+import 'package:modish_store/features/HomePage/presentation/view/widget/custom_bottom_navigation_bar.dart';
+import 'package:modish_store/features/HomePage/presentation/view/widget/custom_drawer.dart';
+import 'package:modish_store/features/HomePage/presentation/view/home/widgets/homepage_body.dart';
+import 'package:modish_store/features/profile/presentation/view/profile_view_page.dart';
+import 'package:modish_store/features/search/presentation/view/search_view_page.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});

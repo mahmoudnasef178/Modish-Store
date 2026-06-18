@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/core/fontstyle.dart';
-import 'package:graduation_project/features/HomePage/data/models/products/products_model.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/products/widget/featureProductDetails.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/core/fontstyle.dart';
+import 'package:modish_store/features/HomePage/data/models/products/products_model.dart';
+import 'package:modish_store/features/HomePage/presentation/view/products/widget/feature_product_details.dart';
 
 class RecommedationItem extends StatelessWidget {
   const RecommedationItem({super.key, required this.product});

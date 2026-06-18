@@ -1,4 +1,4 @@
-import 'package:graduation_project/features/login_signup/login/data/model/login_response_model.dart';
+import 'package:modish_store/features/login_signup/login/data/model/login_response_model.dart';
 
 abstract class LoginState {}
 

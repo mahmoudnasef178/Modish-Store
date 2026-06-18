@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/core/fontstyle.dart';
-import 'package:graduation_project/features/Cart/data/models/cart_model.dart';
-import 'package:graduation_project/features/Cart/data/repo/cart_repo.dart';
-import 'package:graduation_project/features/Cart/data/repo/order_repo.dart';
-import 'package:graduation_project/features/Cart/logic/checkout_cubit/checkout_cubit.dart';
-import 'package:graduation_project/features/Cart/logic/checkout_cubit/checkout_state.dart';
-import 'package:graduation_project/features/Cart/presentation/view/widgets/card_payment_sheet.dart';
-import 'package:graduation_project/features/Cart/presentation/view/widgets/custom_field.dart';
-import 'package:graduation_project/features/Cart/presentation/view/widgets/payment_option.dart';
-import 'package:graduation_project/features/Cart/presentation/view/widgets/section_title.dart';
-import 'package:graduation_project/features/Cart/presentation/view/widgets/success_dialog.dart';
+
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/core/fontstyle.dart';
+import 'package:modish_store/features/Cart/data/models/cart_model.dart';
+import 'package:modish_store/features/Cart/data/repo/cart_repo.dart';
+import 'package:modish_store/features/Cart/data/repo/order_repo.dart';
+import 'package:modish_store/features/Cart/logic/checkout_cubit/checkout_cubit.dart';
+import 'package:modish_store/features/Cart/logic/checkout_cubit/checkout_state.dart';
+import 'package:modish_store/features/Cart/presentation/view/checkout/widgets/card_payment_sheet.dart';
+import 'package:modish_store/features/Cart/presentation/view/checkout/widgets/custom_field.dart';
+import 'package:modish_store/features/Cart/presentation/view/checkout/widgets/payment_option.dart';
+import 'package:modish_store/features/Cart/presentation/view/checkout/widgets/section_title.dart';
+import 'package:modish_store/features/Cart/presentation/view/checkout/widgets/success_dialog.dart';
 
 class CheckoutPage extends StatelessWidget {
   final CartModel cart;
@@ -21,7 +22,8 @@ class CheckoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => CheckoutCubit(GetIt.I<OrderRepository>(), GetIt.I<CartRepository>()),
+      create: (_) =>
+          CheckoutCubit(GetIt.I<OrderRepository>(), GetIt.I<CartRepository>()),
       child: _CheckoutView(cart: cart),
     );
   }
@@ -137,8 +139,9 @@ class _CheckoutViewState extends State<_CheckoutView> {
                   controller: _addressController,
                   hint: 'Street Address',
                   icon: Icons.location_on_outlined,
-                  validator: (v) =>
-                      v == null || v.isEmpty ? 'Please enter your address' : null,
+                  validator: (v) => v == null || v.isEmpty
+                      ? 'Please enter your address'
+                      : null,
                 ),
                 const SizedBox(height: 12),
                 Row(

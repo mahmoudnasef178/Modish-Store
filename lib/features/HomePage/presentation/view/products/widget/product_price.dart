@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/core/fontstyle.dart';
-import 'package:graduation_project/features/HomePage/data/models/products/products_model.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/core/fontstyle.dart';
+import 'package:modish_store/features/HomePage/data/models/products/products_model.dart';
 
 class ProductPrice extends StatelessWidget {
   const ProductPrice({super.key, required this.product});

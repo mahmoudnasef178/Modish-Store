@@ -1,4 +1,4 @@
-import 'package:graduation_project/features/profile/data/models/user_model.dart';
+import 'package:modish_store/features/profile/data/models/user_model.dart';
 
 abstract class ProfileState {}
 

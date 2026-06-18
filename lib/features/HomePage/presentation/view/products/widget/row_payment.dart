@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/features/Cart/logic/cart_cubit/cart_cubit.dart';
-import 'package:graduation_project/features/HomePage/data/models/products/products_model.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/products/widget/container_payment.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/features/Cart/logic/cart_cubit/cart_cubit.dart';
+import 'package:modish_store/features/HomePage/data/models/products/products_model.dart';
+import 'package:modish_store/features/HomePage/presentation/view/products/widget/container_payment.dart';
 
 class RowPayment extends StatelessWidget {
   const RowPayment({super.key, required this.product});

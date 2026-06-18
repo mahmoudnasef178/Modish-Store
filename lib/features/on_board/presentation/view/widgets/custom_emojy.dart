@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/core/colors.dart';
+import 'package:modish_store/core/colors.dart';
 
 class CustomEmojy extends StatelessWidget {
   const CustomEmojy({super.key, required this.pageController});

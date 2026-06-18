@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/features/profile/data/models/user_model.dart';
-import 'package:graduation_project/features/profile/data/repo/profile_repo.dart';
+import 'package:modish_store/features/profile/data/models/user_model.dart';
+import 'package:modish_store/features/profile/data/repo/profile_repo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'profile_state.dart';

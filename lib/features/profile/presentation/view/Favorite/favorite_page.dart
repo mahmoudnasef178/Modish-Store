@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/features/HomePage/logic/Favorite_Cubit/favorite_cubit.dart';
-import 'package:graduation_project/features/HomePage/logic/Favorite_Cubit/favorite_state.dart';
-import 'package:graduation_project/features/profile/presentation/view/Favorite/widgets/customCardFavoriteItem.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/features/HomePage/logic/Favorite_Cubit/favorite_cubit.dart';
+import 'package:modish_store/features/HomePage/logic/Favorite_Cubit/favorite_state.dart';
+import 'package:modish_store/features/profile/presentation/view/Favorite/widgets/custom_card_favorite_item.dart';
 
 class FavoriteViewPage extends StatelessWidget {
   const FavoriteViewPage({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/features/HomePage/data/repo/category/category_repo.dart';
+import 'package:modish_store/features/HomePage/data/repo/category/category_repo.dart';
 
 import 'category_state.dart';
 

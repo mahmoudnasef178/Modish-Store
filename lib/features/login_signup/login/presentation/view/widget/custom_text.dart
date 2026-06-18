@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/core/fontstyle.dart';
+import 'package:modish_store/core/fontstyle.dart';
 
 class CustomText extends StatelessWidget {
   const CustomText({

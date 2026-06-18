@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/features/login_signup/login/presentation/view/widget/login_body.dart';
+import 'package:modish_store/features/login_signup/login/presentation/view/widget/login_body.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

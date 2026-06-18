@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:graduation_project/features/HomePage/data/models/products/products_model.dart';
+import 'package:modish_store/features/HomePage/data/models/products/products_model.dart';
 
 class ProductRepository {
   final Dio _dio;

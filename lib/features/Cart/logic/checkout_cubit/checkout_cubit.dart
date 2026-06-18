@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:graduation_project/features/Cart/data/repo/order_repo.dart';
-import 'package:graduation_project/features/Cart/data/repo/cart_repo.dart';
-import 'package:graduation_project/features/Cart/data/models/cart_model.dart';
+import 'package:modish_store/features/Cart/data/repo/order_repo.dart';
+import 'package:modish_store/features/Cart/data/repo/cart_repo.dart';
+import 'package:modish_store/features/Cart/data/models/cart_model.dart';
 import 'checkout_state.dart';
 
 class CheckoutCubit extends Cubit<CheckoutState> {

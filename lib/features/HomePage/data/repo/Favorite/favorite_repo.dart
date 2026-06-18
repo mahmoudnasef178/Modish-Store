@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:graduation_project/core/secure_storage_helper.dart';
-import 'package:graduation_project/features/HomePage/data/models/Favorite/favorite_model.dart';
+import 'package:modish_store/core/secure_storage_helper.dart';
+import 'package:modish_store/features/HomePage/data/models/Favorite/favorite_model.dart';
 
 class FavoriteRepository {
   final Dio _dio;

@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/features/HomePage/data/models/Favorite/favorite_model.dart';
-import 'package:graduation_project/features/HomePage/data/models/products/products_model.dart';
-import 'package:graduation_project/features/HomePage/logic/Favorite_Cubit/favorite_cubit.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/products/widget/featureProductDetails.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/features/HomePage/data/models/Favorite/favorite_model.dart';
+import 'package:modish_store/features/HomePage/data/models/products/products_model.dart';
+import 'package:modish_store/features/HomePage/logic/Favorite_Cubit/favorite_cubit.dart';
+import 'package:modish_store/features/HomePage/presentation/view/products/widget/feature_product_details.dart';
 
 class CustomCardFavoriteItem extends StatelessWidget {
   const CustomCardFavoriteItem({super.key, required this.item});

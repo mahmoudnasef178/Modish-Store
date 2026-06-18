@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/core/fontstyle.dart';
-import 'package:graduation_project/core/responsive.dart';
-import 'package:graduation_project/features/HomePage/data/models/products/products_model.dart';
-import 'package:graduation_project/features/HomePage/data/repo/products/products_repo.dart';
-import 'package:graduation_project/features/HomePage/logic/products/products_cubit.dart';
-import 'package:graduation_project/features/HomePage/logic/products/products_state.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/custom_AppBar.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/products/widget/featureProductDetails.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/core/fontstyle.dart';
+import 'package:modish_store/core/responsive.dart';
+import 'package:modish_store/features/HomePage/data/models/products/products_model.dart';
+import 'package:modish_store/features/HomePage/data/repo/products/products_repo.dart';
+import 'package:modish_store/features/HomePage/logic/products/products_cubit.dart';
+import 'package:modish_store/features/HomePage/logic/products/products_state.dart';
+import 'package:modish_store/features/HomePage/presentation/view/widget/custom_app_bar.dart';
+import 'package:modish_store/features/HomePage/presentation/view/products/widget/feature_product_details.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({

@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:graduation_project/features/Cart/data/repo/cart_repo.dart';
-import 'package:graduation_project/features/Cart/data/repo/order_repo.dart';
-import 'package:graduation_project/features/HomePage/data/repo/Favorite/favorite_repo.dart';
-import 'package:graduation_project/features/HomePage/data/repo/products/products_repo.dart';
-import 'package:graduation_project/features/login_signup/login/data/repo/login_repo.dart';
-import 'package:graduation_project/features/login_signup/signup/data/repo/signUp_repo.dart';
-import 'package:graduation_project/features/profile/data/repo/profile_repo.dart';
+import 'package:modish_store/features/Cart/data/repo/cart_repo.dart';
+import 'package:modish_store/features/Cart/data/repo/order_repo.dart';
+import 'package:modish_store/features/HomePage/data/repo/Favorite/favorite_repo.dart';
+import 'package:modish_store/features/HomePage/data/repo/products/products_repo.dart';
+import 'package:modish_store/features/login_signup/login/data/repo/login_repo.dart';
+import 'package:modish_store/features/login_signup/signup/data/repo/signUp_repo.dart';
+import 'package:modish_store/features/profile/data/repo/profile_repo.dart';
 
 final GetIt getIt = GetIt.instance;
 

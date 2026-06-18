@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/features/HomePage/logic/Navigation_Cubit/navigation_cubit.dart';
+import 'package:modish_store/features/HomePage/logic/Navigation_Cubit/navigation_cubit.dart';
 
 class Custombottomnavigationbar extends StatelessWidget {
   const Custombottomnavigationbar({super.key});

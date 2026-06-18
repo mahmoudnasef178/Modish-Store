@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:graduation_project/features/login_signup/login/data/model/login_request_model.dart';
-import 'package:graduation_project/features/login_signup/login/data/model/login_response_model.dart';
+import 'package:modish_store/features/login_signup/login/data/model/login_request_model.dart';
+import 'package:modish_store/features/login_signup/login/data/model/login_response_model.dart';
 
 class LoginRepository {
   final Dio _dio;

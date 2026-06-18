@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:graduation_project/features/HomePage/presentation/view/homepage.dart';
-import 'package:graduation_project/features/login_signup/login/logic/login/login_cubit.dart';
-import 'package:graduation_project/features/on%20board/presentation/view/on_board_view.dart';
+import 'package:modish_store/features/HomePage/presentation/view/home/homepage.dart';
+import 'package:modish_store/features/login_signup/login/logic/login/login_cubit.dart';
+import 'package:modish_store/features/on_board/presentation/view/on_board_view.dart';
 
 class SplashBody extends StatefulWidget {
   const SplashBody({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/features/splash/presentation/view/widgets/splash_body.dart';
+import 'package:modish_store/features/splash/presentation/view/widgets/splash_body.dart';
 
 class SplashView extends StatelessWidget {
   const SplashView({super.key});

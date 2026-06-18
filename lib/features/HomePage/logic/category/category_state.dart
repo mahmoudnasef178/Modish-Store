@@ -1,4 +1,4 @@
-import 'package:graduation_project/features/HomePage/data/models/category/category_model.dart';
+import 'package:modish_store/features/HomePage/data/models/category/category_model.dart';
 
 abstract class CategoryState {}
 

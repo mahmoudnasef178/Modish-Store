@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:graduation_project/core/colors.dart';
-import 'package:graduation_project/core/fontstyle.dart';
-import 'package:graduation_project/core/utils.dart';
-import 'package:graduation_project/features/HomePage/data/models/category/category_model.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/products/products_page.dart';
+import 'package:modish_store/core/colors.dart';
+import 'package:modish_store/core/fontstyle.dart';
+import 'package:modish_store/core/utils.dart';
+import 'package:modish_store/features/HomePage/data/models/category/category_model.dart';
+import 'package:modish_store/features/HomePage/presentation/view/products/products_page.dart';
 
 class CategoryItem extends StatelessWidget {
   const CategoryItem({super.key, required this.category});

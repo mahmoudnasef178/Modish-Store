@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:graduation_project/core/fontstyle.dart';
-import 'package:graduation_project/core/responsive.dart';
-import 'package:graduation_project/core/utils.dart';
-import 'package:graduation_project/features/HomePage/logic/Navigation_Cubit/navigation_cubit.dart';
-import 'package:graduation_project/features/HomePage/logic/Navigation_Cubit/navigation_state.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/notification_View.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/products/products_page.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/recommendation/recommendation_page.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/ListView_Category.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/ListView_FeatureProducts.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/New_collection_Card.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/custom_AppBar.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/custom_frame.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/recommendation_listview.dart';
-import 'package:graduation_project/features/HomePage/presentation/view/widget/topCollection_container.dart';
-import 'package:graduation_project/features/profile/presentation/view/category/category_Page.dart';
+import 'package:modish_store/core/fontstyle.dart';
+import 'package:modish_store/core/responsive.dart';
+import 'package:modish_store/core/utils.dart';
+import 'package:modish_store/features/HomePage/logic/Navigation_Cubit/navigation_cubit.dart';
+import 'package:modish_store/features/HomePage/logic/Navigation_Cubit/navigation_state.dart';
+import 'package:modish_store/features/HomePage/presentation/view/notification/notification_view.dart';
+import 'package:modish_store/features/HomePage/presentation/view/products/products_page.dart';
+import 'package:modish_store/features/HomePage/presentation/view/recommendation/recommendation_page.dart';
+import 'package:modish_store/features/HomePage/presentation/view/home/widgets/listview_category.dart';
+import 'package:modish_store/features/HomePage/presentation/view/home/widgets/listview_feature_products.dart';
+import 'package:modish_store/features/HomePage/presentation/view/home/widgets/new_collection_card.dart';
+import 'package:modish_store/features/HomePage/presentation/view/widget/custom_app_bar.dart';
+import 'package:modish_store/features/HomePage/presentation/view/widget/custom_frame.dart';
+import 'package:modish_store/features/HomePage/presentation/view/home/widgets/recommendation_listview.dart';
+import 'package:modish_store/features/HomePage/presentation/view/home/widgets/top_collection_container.dart';
+import 'package:modish_store/features/HomePage/presentation/view/category/category_page.dart';
 
 class HomepageBody extends StatelessWidget {
   const HomepageBody({super.key, required this.globalKey});
