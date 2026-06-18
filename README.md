@@ -119,17 +119,6 @@ flutter pub get
 # Run the app
 flutter run
 ```
-
-## 👥 Team
-
-This project was built collaboratively as a graduation project.
-
-| Name | Role |
-|---|---|
-| **Mahmoud Nasef** | Flutter Developer — full app architecture & implementation |
-| *Teammate name* | *Role* |
-| *Teammate name* | *Role* |
-
 ## 📬 Contact
 
 **Mahmoud Nasef**
