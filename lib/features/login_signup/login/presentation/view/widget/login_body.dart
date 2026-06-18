@@ -63,9 +63,10 @@ class _LoginFormState extends State<_LoginForm> {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          Navigator.pushReplacement(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (_) => const Homepage()),
+            (route) => false,
           );
         } else if (state is LoginFailure) {
           ScaffoldMessenger.of(context).showSnackBar(

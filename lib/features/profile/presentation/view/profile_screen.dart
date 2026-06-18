@@ -253,9 +253,6 @@ class _ProfileViewState extends State<_ProfileView> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your name';
                             }
-                            if (value.trim().contains(' ')) {
-                              return 'Name cannot contain spaces';
-                            }
                             return null;
                           },
                         ),

@@ -44,6 +44,36 @@ class _CheckoutViewState extends State<_CheckoutView> {
   final _zipController = TextEditingController();
   final _phoneController = TextEditingController();
   String _paymentMethod = 'cash';
+  String? _selectedCity;
+
+  final List<String> _cities = [
+    'Cairo',
+    'Giza',
+    'Alexandria',
+    'Qalyubia',
+    'Sharqia',
+    'Dakahlia',
+    'Beheira',
+    'Gharbia',
+    'Sohag',
+    'Minya',
+    'Asyut',
+    'Monufia',
+    'Fayoum',
+    'Qena',
+    'Suez',
+    'Port Said',
+    'Damietta',
+    'Ismailia',
+    'Beni Suef',
+    'Matrouh',
+    'Red Sea',
+    'New Valley',
+    'North Sinai',
+    'South Sinai',
+    'Luxor',
+    'Aswan',
+  ];
 
   @override
   void dispose() {
@@ -147,12 +177,47 @@ class _CheckoutViewState extends State<_CheckoutView> {
                 Row(
                   children: [
                     Expanded(
-                      child: CustomField(
-                        controller: _cityController,
-                        hint: 'City',
-                        icon: Icons.location_city_outlined,
+                      child: DropdownButtonFormField<String>(
+                        initialValue: _selectedCity,
+                        hint: const Text(
+                          'City',
+                          style: TextStyle(color: secondaryColorText, fontSize: 13),
+                        ),
+                        icon: const Icon(Icons.arrow_drop_down, color: kPrimaryColor),
+                        style: const TextStyle(color: primaryColorText, fontSize: 14),
+                        dropdownColor: Colors.white,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.location_city_outlined, color: kPrimaryColor, size: 20),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: const BorderSide(color: kPrimaryColor, width: 1.5),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: const BorderSide(color: Colors.red, width: 1),
+                          ),
+                        ),
                         validator: (v) =>
                             v == null || v.isEmpty ? 'Required' : null,
+                        items: _cities.map((city) {
+                          return DropdownMenuItem<String>(
+                            value: city,
+                            child: Text(city),
+                          );
+                        }).toList(),
+                        onChanged: (v) {
+                          setState(() {
+                            _selectedCity = v;
+                            _cityController.text = v ?? '';
+                          });
+                        },
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -174,8 +239,16 @@ class _CheckoutViewState extends State<_CheckoutView> {
                   hint: 'Phone Number',
                   icon: Icons.phone_outlined,
                   keyboardType: TextInputType.phone,
-                  validator: (v) =>
-                      v == null || v.isEmpty ? 'Please enter your phone' : null,
+                  validator: (v) {
+                    if (v == null || v.isEmpty) {
+                      return 'Please enter your phone';
+                    }
+                    final regExp = RegExp(r'^01[0125][0-9]{8}$');
+                    if (!regExp.hasMatch(v.trim())) {
+                      return 'Enter a valid Egyptian mobile number';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 24),
 

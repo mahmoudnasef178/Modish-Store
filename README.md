@@ -133,7 +133,7 @@ This project was built collaboratively as a graduation project.
 ## 📬 Contact
 
 **Mahmoud Nasef**
-[GitHub](https://github.com/mahmoudnasef178) · *add LinkedIn link here*
+[GitHub](https://github.com/mahmoudnasef178) · [Linkedin](www.linkedin.com/in/mahmoud-nasef1)
 
 ---
 

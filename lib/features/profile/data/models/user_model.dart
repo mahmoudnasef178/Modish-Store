@@ -20,14 +20,15 @@ class UserModel {
     final userName = json['userName']?.toString() ?? '';
     final email = json['email']?.toString() ?? '';
 
-    // Pick the best available name — avoid using the email as the name
+    // Pick the best available name — avoid using the email as the name.
+    // We prioritize userName because it is the field updated by the UpdateUser API.
     String resolvedName;
-    if (fullName != null && fullName.isNotEmpty) {
-      resolvedName = fullName;
+    if (userName.isNotEmpty && !userName.contains('@')) {
+      resolvedName = userName;
     } else if (displayNameField != null && displayNameField.isNotEmpty && !displayNameField.contains('@')) {
       resolvedName = displayNameField;
-    } else if (userName.isNotEmpty && !userName.contains('@')) {
-      resolvedName = userName;
+    } else if (fullName != null && fullName.isNotEmpty) {
+      resolvedName = fullName;
     } else {
       // Fallback: extract name from email prefix
       resolvedName = email.contains('@') ? email.split('@')[0] : userName;

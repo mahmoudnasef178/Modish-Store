@@ -67,9 +67,10 @@ class _SignupFormState extends State<_SignupForm> {
     return BlocListener<SignupCubit, SignupState>(
       listener: (context, state) {
         if (state is SignupSuccess) {
-          Navigator.pushReplacement(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (_) => const Homepage()),
+            (route) => false,
           );
         } else if (state is SignupFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
