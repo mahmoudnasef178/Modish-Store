@@ -49,6 +49,42 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           // Remove scroll glow on web/desktop
           scrollBehavior: _AppScrollBehavior(),
+          builder: (context, child) {
+            final double width = MediaQuery.of(context).size.width;
+            if (width > 600) {
+              final originalData = MediaQuery.of(context);
+              final customData = originalData.copyWith(
+                size: Size(480, originalData.size.height - 48), // Adjusting height for 24px vertical margin
+              );
+              return Container(
+                color: isDark ? const Color(0xff0a0a0c) : const Color(0xfff3f4f6),
+                child: Center(
+                  child: Container(
+                    width: 480,
+                    margin: const EdgeInsets.symmetric(vertical: 24),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.12),
+                          blurRadius: 30,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
+                    ),
+                    child: MediaQuery(
+                      data: customData,
+                      child: Material(
+                        child: child,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+            return child!;
+          },
           home: const SplashView(),
         );
       },

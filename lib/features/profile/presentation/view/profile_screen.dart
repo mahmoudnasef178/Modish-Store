@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -37,6 +37,71 @@ class _ProfileViewState extends State<_ProfileView> {
   final _newPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _fieldsPopulated = false;
+
+  void _showImageOptions(BuildContext context, ProfileCubit cubit) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      backgroundColor: kCardColor(context),
+      builder: (bottomSheetContext) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 12),
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 16),
+              ListTile(
+                leading: Icon(Icons.visibility_outlined, color: kPrimaryText(context)),
+                title: Text(
+                  'View Profile Picture',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: kPrimaryText(context),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(bottomSheetContext); // close bottom sheet
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FullScreenImageViewer(
+                        imageBytes: cubit.pickedImageBytes,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.edit_outlined, color: kPrimaryText(context)),
+                title: Text(
+                  'Change Profile Picture',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: kPrimaryText(context),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(bottomSheetContext); // close bottom sheet
+                  cubit.pickImage();
+                },
+              ),
+              const SizedBox(height: 12),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   void dispose() {
@@ -159,7 +224,7 @@ class _ProfileViewState extends State<_ProfileView> {
                   // ─── Profile Avatar Section ─────────────────────────
                   Center(
                     child: GestureDetector(
-                      onTap: () => cubit.pickImage(),
+                      onTap: () => _showImageOptions(context, cubit),
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
@@ -175,19 +240,22 @@ class _ProfileViewState extends State<_ProfileView> {
                                 ),
                               ],
                             ),
-                            child: CircleAvatar(
-                              radius: avatarRadius,
-                              backgroundColor: Colors.grey.shade200,
-                              backgroundImage: cubit.pickedImage != null
-                                  ? FileImage(File(cubit.pickedImage!.path))
-                                  : null,
-                              child: cubit.pickedImage == null
-                                  ? Icon(
-                                      Icons.person,
-                                      size: avatarRadius * 1.1,
-                                      color: Colors.grey.shade400,
-                                    )
-                                  : null,
+                            child: Hero(
+                              tag: 'profile_avatar_hero',
+                              child: CircleAvatar(
+                                radius: avatarRadius,
+                                backgroundColor: Colors.grey.shade200,
+                                backgroundImage: cubit.pickedImageBytes != null
+                                    ? MemoryImage(cubit.pickedImageBytes!)
+                                    : null,
+                                child: cubit.pickedImageBytes == null
+                                    ? Icon(
+                                        Icons.person,
+                                        size: avatarRadius * 1.1,
+                                        color: Colors.grey.shade400,
+                                      )
+                                    : null,
+                              ),
                             ),
                           ),
                           Positioned(
@@ -478,6 +546,46 @@ class _ProfileInputFieldState extends State<_ProfileInputField> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class FullScreenImageViewer extends StatelessWidget {
+  final Uint8List? imageBytes;
+
+  const FullScreenImageViewer({super.key, this.imageBytes});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.close, color: Colors.white, size: 28),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: Center(
+        child: InteractiveViewer(
+          minScale: 0.5,
+          maxScale: 4.0,
+          child: Hero(
+            tag: 'profile_avatar_hero',
+            child: imageBytes != null
+                ? Image.memory(
+                    imageBytes!,
+                    fit: BoxFit.contain,
+                  )
+                : const Icon(
+                    Icons.person,
+                    size: 200,
+                    color: Colors.grey,
+                  ),
+          ),
+        ),
+      ),
     );
   }
 }

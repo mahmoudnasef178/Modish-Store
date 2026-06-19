@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:modish_store/core/colors.dart';
 import 'package:modish_store/core/fontstyle.dart';
@@ -333,29 +334,7 @@ class _OrderSummaryCard extends StatelessWidget {
         children: [
           // Item rows
           ...cart.cartItems.map(
-            (item) => Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      '${item.productName} x${item.quantity}',
-                      style: t14.copyWith(color: primaryColorText),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  Text(
-                    '\$ ${item.totalPrice.toStringAsFixed(2)}',
-                    style: t14.copyWith(
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            (item) => _CartItemSummaryRow(item: item),
           ),
           const Divider(),
           // Subtotal
@@ -414,6 +393,75 @@ class _SummaryLine extends StatelessWidget {
               : t14.copyWith(color: secondaryColorText),
         ),
       ],
+    );
+  }
+}
+
+class _CartItemSummaryRow extends StatelessWidget {
+  final CartItemModel item;
+  const _CartItemSummaryRow({required this.item});
+
+  Future<int> _getSelectedColorIndex() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('product_color_${item.productId}') ?? 0;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: FutureBuilder<int>(
+              future: _getSelectedColorIndex(),
+              builder: (context, snapshot) {
+                final colorIndex = snapshot.data ?? 0;
+                final selectedColor = (colorIndex >= 0 && colorIndex < kProductColors.length)
+                    ? kProductColors[colorIndex]
+                    : null;
+
+                return Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${item.productName} x${item.quantity}',
+                        style: t14.copyWith(color: primaryColorText),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    if (selectedColor != null) ...[
+                      const SizedBox(width: 8),
+                      Container(
+                        width: 12,
+                        height: 12,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: selectedColor,
+                          border: Border.all(
+                            color: Colors.grey.shade300,
+                            width: 0.5,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                );
+              },
+            ),
+          ),
+          const SizedBox(width: 12),
+          Text(
+            '\$ ${item.totalPrice.toStringAsFixed(2)}',
+            style: t14.copyWith(
+              color: kPrimaryColor,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

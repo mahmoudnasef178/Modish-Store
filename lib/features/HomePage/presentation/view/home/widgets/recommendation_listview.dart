@@ -15,7 +15,7 @@ class RecommendationListview extends StatelessWidget {
     return BlocProvider(
       create: (_) => ProductCubit(GetIt.I<ProductRepository>())..getRecommended(),
       child: SizedBox(
-        height: context.height * .12,
+        height: 90,
         child: BlocBuilder<ProductCubit, ProductState>(
           builder: (context, state) {
             if (state is ProductLoading) {

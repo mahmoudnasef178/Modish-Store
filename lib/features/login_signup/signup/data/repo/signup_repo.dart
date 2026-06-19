@@ -7,7 +7,7 @@ class SignupRepository {
   SignupRepository(this._dio);
 
   static const String _url =
-      'http://ecommercetest2.runasp.net/api/Account/Register';
+      'https://modish-auth-proxy.nasefm036.workers.dev/api/Account/Register';
 
   Future<SignupResponseModel> register(SignupRequestModel request) async {
     try {

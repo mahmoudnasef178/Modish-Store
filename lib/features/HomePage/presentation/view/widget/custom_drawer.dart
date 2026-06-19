@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:modish_store/core/colors.dart';
 import 'package:modish_store/features/HomePage/presentation/view/notification/notification_view.dart';
@@ -10,7 +14,6 @@ import 'package:modish_store/features/HomePage/presentation/view/category/catego
 import 'package:modish_store/features/profile/presentation/view/profile_screen.dart';
 import 'package:modish_store/features/splash/presentation/view/splash_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -22,7 +25,7 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   String _email = '';
   String _displayName = '';
-  String _imagePath = '';
+  Uint8List? _imageBytes;
 
   @override
   void initState() {
@@ -33,7 +36,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Reload every time the drawer comes back into view
     _loadUserData();
   }
 
@@ -54,201 +56,223 @@ class _CustomDrawerState extends State<CustomDrawer> {
       resolvedName = rawName;
     }
 
+    final base64Image = prefs.getString('profile_image_base64');
+    Uint8List? bytes;
+    if (base64Image != null) {
+      try {
+        bytes = base64Decode(base64Image);
+      } catch (_) {}
+    } else {
+      final savedImagePath = prefs.getString('profile_image_path') ?? '';
+      if (savedImagePath.isNotEmpty && !kIsWeb) {
+        try {
+          final file = File(savedImagePath);
+          if (file.existsSync()) {
+            bytes = file.readAsBytesSync();
+          }
+        } catch (_) {}
+      }
+    }
+
     setState(() {
       _email = email;
       _displayName = resolvedName;
-      _imagePath = prefs.getString('profile_image_path') ?? '';
+      _imageBytes = bytes;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * .5,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16.0),
-        child: Column(
-          children: [
-            SizedBox(height: MediaQuery.of(context).size.height * .1),
-            GestureDetector(
-              onTap: () async {
-                Navigator.pop(context);
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const ProfileScreen()),
-                );
-                // Reload after returning from profile edit
-                _loadUserData();
-              },
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 34,
-                    backgroundColor: const Color(0xff9F8383),
-                    backgroundImage: (_imagePath.isNotEmpty &&
-                            File(_imagePath).existsSync())
-                        ? FileImage(File(_imagePath))
-                        : null,
-                    child: (_imagePath.isEmpty ||
-                            !File(_imagePath).existsSync())
-                        ? const Icon(
-                            Icons.person,
-                            size: 34,
-                            color: Colors.white,
-                          )
-                        : null,
-                  ),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bgColor = isDark ? const Color(0xff1e1e1e) : Colors.white;
 
-                  Expanded(
-                    child: ListTile(
-                      title: Text(
-                        _displayName.isNotEmpty
-                            ? _displayName
-                            : _email.split('@')[0],
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          color: kPrimaryText(context),
-                        ),
+    return Drawer(
+      backgroundColor: bgColor,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                const SizedBox(height: 24),
+                GestureDetector(
+                  onTap: () async {
+                    Navigator.pop(context);
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const ProfileScreen()),
+                    );
+                    _loadUserData();
+                  },
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 34,
+                        backgroundColor: const Color(0xff9F8383),
+                        backgroundImage: _imageBytes != null
+                            ? MemoryImage(_imageBytes!)
+                            : null,
+                        child: _imageBytes == null
+                            ? const Icon(
+                                Icons.person,
+                                size: 34,
+                                color: Colors.white,
+                              )
+                            : null,
                       ),
-                      subtitle: Text(
-                        _email,
-                        style: TextStyle(color: kSecondaryText(context)),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 86),
-            CustomListtile(
-              icon: "assets/icons/drawer_icon/Profile.svg",
-              text: "Profile",
-              onTap: () async {
-                Navigator.pop(context);
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const ProfileScreen()),
-                );
-                // Reload after returning from profile edit
-                _loadUserData();
-              },
-            ),
-            SizedBox(height: 32),
-            CustomListtile(
-              icon: "assets/icons/drawer_icon/Notifications.svg",
-              text: "Notification",
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const NotificationView()),
-                );
-              },
-            ),
-            SizedBox(height: 32),
-            CustomListtile(
-              icon: "assets/icons/drawer_icon/Path.svg",
-              text: "Favorite",
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const FavoriteViewPage()),
-                );
-              },
-            ),
-            SizedBox(height: 32),
-            CustomListtile(
-              icon: "assets/icons/drawer_icon/category.svg",
-              text: "Category",
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const CategorySection()),
-                );
-              },
-            ),
-            SizedBox(height: 32),
-            CustomListtile(
-              icon: "assets/icons/drawer_icon/support.svg",
-              text: "Support",
-              onTap: () {
-                Navigator.pop(context);
-                showModalBottomSheet(
-                  context: context,
-                  backgroundColor: const Color(0xFF2A2A2A),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
-                    ),
-                  ),
-                  builder: (context) => const EmailChooserSheet(),
-                );
-              },
-            ),
-            SizedBox(height: 32),
-            CustomListtile(
-              icon: "assets/icons/drawer_icon/About_us.svg",
-              text: "About Us",
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const AboutUsPage()),
-                );
-              },
-            ),
-            SizedBox(height: 32),
-            CustomListtile(
-              icon: "assets/icons/logout-svgrepo-com.svg",
-              text: "Logout",
-              onTap: () async {
-                final confirm = await showDialog<bool>(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    title: const Text(
-                      'Logout',
-                      style: TextStyle(fontWeight: FontWeight.w900),
-                    ),
-                    content: const Text('Are you sure you want to logout?'),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, false),
-                        child: const Text(
-                          'Cancel',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, true),
-                        child: const Text(
-                          'Logout',
-                          style: TextStyle(color: Colors.red),
+                      Expanded(
+                        child: ListTile(
+                          title: Text(
+                            _displayName.isNotEmpty
+                                ? _displayName
+                                : _email.split('@')[0],
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              color: kPrimaryText(context),
+                            ),
+                          ),
+                          subtitle: Text(
+                            _email,
+                            style: TextStyle(color: kSecondaryText(context)),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                );
-
-                if (confirm == true) {
-                  await LoginCubit.logout();
-                  if (context.mounted) {
-                    Navigator.pushAndRemoveUntil(
+                ),
+                const SizedBox(height: 48),
+                CustomListtile(
+                  icon: "assets/icons/drawer_icon/Profile.svg",
+                  text: "Profile",
+                  onTap: () async {
+                    Navigator.pop(context);
+                    await Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => SplashView()),
-                      (route) => false,
+                      MaterialPageRoute(builder: (_) => const ProfileScreen()),
                     );
-                  }
-                }
-              },
+                    _loadUserData();
+                  },
+                ),
+                const SizedBox(height: 24),
+                CustomListtile(
+                  icon: "assets/icons/drawer_icon/Notifications.svg",
+                  text: "Notification",
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const NotificationView()),
+                    );
+                  },
+                ),
+                const SizedBox(height: 24),
+                CustomListtile(
+                  icon: "assets/icons/drawer_icon/Path.svg",
+                  text: "Favorite",
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const FavoriteViewPage()),
+                    );
+                  },
+                ),
+                const SizedBox(height: 24),
+                CustomListtile(
+                  icon: "assets/icons/drawer_icon/category.svg",
+                  text: "Category",
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const CategorySection()),
+                    );
+                  },
+                ),
+                const SizedBox(height: 24),
+                CustomListtile(
+                  icon: "assets/icons/drawer_icon/support.svg",
+                  text: "Support",
+                  onTap: () {
+                    Navigator.pop(context);
+                    showModalBottomSheet(
+                      context: context,
+                      backgroundColor: const Color(0xFF2A2A2A),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                      ),
+                      builder: (context) => const EmailChooserSheet(),
+                    );
+                  },
+                ),
+                const SizedBox(height: 24),
+                CustomListtile(
+                  icon: "assets/icons/drawer_icon/About_us.svg",
+                  text: "About Us",
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const AboutUsPage()),
+                    );
+                  },
+                ),
+                const SizedBox(height: 24),
+                CustomListtile(
+                  icon: "assets/icons/logout-svgrepo-com.svg",
+                  text: "Logout",
+                  onTap: () async {
+                    final confirm = await showDialog<bool>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        title: const Text(
+                          'Logout',
+                          style: TextStyle(fontWeight: FontWeight.w900),
+                        ),
+                        content: const Text('Are you sure you want to logout?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, false),
+                            child: const Text(
+                              'Cancel',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, true),
+                            child: const Text(
+                              'Logout',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+
+                    if (confirm == true) {
+                      await LoginCubit.logout();
+                      if (context.mounted) {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => SplashView()),
+                          (route) => false,
+                        );
+                      }
+                    }
+                  },
+                ),
+                const SizedBox(height: 24),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

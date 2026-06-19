@@ -7,7 +7,7 @@ class LoginRepository {
   LoginRepository(this._dio);
 
   static const String _url =
-      'http://ecommercetest2.runasp.net/api/Account/Login';
+      'https://modish-auth-proxy.nasefm036.workers.dev/api/Account/Login';
 
   Future<LoginResponseModel> login(LoginRequestModel request) async {
     try {

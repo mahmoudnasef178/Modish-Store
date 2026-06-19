@@ -441,7 +441,7 @@ class _ContactCard extends StatelessWidget {
           SizedBox(height: size.height * 0.012),
           _ContactItem(
             icon: Icons.phone_rounded,
-            text: '+20 100 000 0000',
+            text: '+20 1550378178',
             fontSize: contentFontSize,
           ),
           SizedBox(height: size.height * 0.012),

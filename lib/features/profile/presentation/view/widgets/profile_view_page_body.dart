@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,7 +43,6 @@ class ProfileviewpageBody extends StatelessWidget {
         builder: (context, state) {
           final cubit = context.read<ProfileCubit>();
           final user = cubit.currentUser;
-          final imageFile = cubit.pickedImage != null ? File(cubit.pickedImage!.path) : null;
 
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -96,8 +94,10 @@ class ProfileviewpageBody extends StatelessWidget {
                               child: CircleAvatar(
                                 radius: 36,
                                 backgroundColor: Colors.white24,
-                                backgroundImage: imageFile != null ? FileImage(imageFile) : null,
-                                child: imageFile == null
+                                backgroundImage: cubit.pickedImageBytes != null
+                                    ? MemoryImage(cubit.pickedImageBytes!)
+                                    : null,
+                                child: cubit.pickedImageBytes == null
                                     ? const Icon(Icons.person, size: 36, color: Colors.white)
                                     : null,
                               ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:modish_store/core/colors.dart';
 import 'package:modish_store/core/fontstyle.dart';
 import 'package:modish_store/features/Cart/data/models/cart_model.dart';
@@ -92,9 +93,49 @@ class CartItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const Gap(4),
-                  Text(
-                    '\$${item.price.toStringAsFixed(2)}',
-                    style: t14.copyWith(color: secondaryColorText),
+                  Row(
+                    children: [
+                      Text(
+                        '\$${item.price.toStringAsFixed(2)}',
+                        style: t14.copyWith(color: secondaryColorText),
+                      ),
+                      const SizedBox(width: 12),
+                      FutureBuilder<int>(
+                        future: SharedPreferences.getInstance().then(
+                            (prefs) => prefs.getInt('product_color_${item.productId}') ?? 0),
+                        builder: (context, snapshot) {
+                          final colorIndex = snapshot.data ?? 0;
+                          final selectedColor = (colorIndex >= 0 && colorIndex < kProductColors.length)
+                              ? kProductColors[colorIndex]
+                              : null;
+                          if (selectedColor == null) return const SizedBox.shrink();
+                          return Row(
+                            children: [
+                              Text(
+                                "Color: ",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey.shade500,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              Container(
+                                width: 12,
+                                height: 12,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: selectedColor,
+                                  border: Border.all(
+                                    color: Colors.grey.shade300,
+                                    width: 0.5,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
                   ),
                   const Gap(8),
                   Row(

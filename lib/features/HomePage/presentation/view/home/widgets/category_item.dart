@@ -24,32 +24,30 @@ class CategoryItem extends StatelessWidget {
           ),
         );
       },
-      child: SizedBox(
-        height: context.height * .1,
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: kPrimaryColor),
-                borderRadius: BorderRadius.circular(64),
-                color: Color(int.parse(category.color.replaceAll('#', '0xFF'))),
-              ),
-              padding: const EdgeInsets.all(12.0),
-              child: Text(category.icon, style: const TextStyle(fontSize: 24)),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: kPrimaryColor),
+              borderRadius: BorderRadius.circular(64),
+              color: Color(int.parse(category.color.replaceAll('#', '0xFF'))),
             ),
-            const Gap(16),
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 120, minWidth: 80),
-              child: Text(
-                category.name,
-                softWrap: true,
-                maxLines: 2,
-                style: t12.copyWith(color: kSecondaryText(context)),
-                textAlign: TextAlign.center,
-              ),
+            padding: const EdgeInsets.all(12.0),
+            child: Text(category.icon, style: const TextStyle(fontSize: 24)),
+          ),
+          const Gap(8),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 120, minWidth: 80),
+            child: Text(
+              category.name,
+              softWrap: true,
+              maxLines: 2,
+              style: t12.copyWith(color: kSecondaryText(context)),
+              textAlign: TextAlign.center,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -26,3 +26,10 @@ Color kSecondaryText(BuildContext context) =>
     Theme.of(context).brightness == Brightness.dark
     ? const Color(0xff9E9E9E)
     : secondaryColorText;
+
+final List<Color> kProductColors = [
+  Colors.red,
+  Colors.black,
+  Colors.blue,
+  Colors.brown.shade500,
+];

@@ -5,7 +5,7 @@ import 'package:modish_store/features/profile/data/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileRepository {
-  static const _baseUrl = 'http://ecommercetest2.runasp.net/api/ManageUser';
+  static const _baseUrl = 'https://modish-auth-proxy.nasefm036.workers.dev/api/ManageUser';
 
   Future<String?> _getToken() async {
     return SecureStorageHelper.getToken();

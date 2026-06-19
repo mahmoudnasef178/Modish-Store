@@ -94,7 +94,7 @@ class Featureproductdetails extends StatelessWidget {
                     ),
                   ),
                   Gap(18),
-                  ProductColor(),
+                  ProductColor(productId: product.productId),
                   Gap(18),
                   Align(
                     alignment: AlignmentGeometry.centerStart,

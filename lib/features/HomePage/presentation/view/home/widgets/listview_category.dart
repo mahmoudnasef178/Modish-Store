@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modish_store/core/utils.dart';
 import 'package:modish_store/features/HomePage/data/repo/category/category_repo.dart';
 import 'package:modish_store/features/HomePage/logic/category/category_cubit.dart';
 import 'package:modish_store/features/HomePage/logic/category/category_state.dart';
@@ -14,7 +13,7 @@ class ListviewCategory extends StatelessWidget {
     return BlocProvider(
       create: (_) => CategoryCubit(CategoryRepository())..getCategories(),
       child: SizedBox(
-        height: context.height * .15,
+        height: 115,
         child: BlocBuilder<CategoryCubit, CategoryState>(
           builder: (context, state) {
             if (state is CategoryLoading) {
@@ -27,13 +26,34 @@ class ListviewCategory extends StatelessWidget {
                 ),
               );
             } else if (state is CategorySuccess) {
-              return ListView.separated(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                separatorBuilder: (_, _) => const SizedBox(width: 28),
-                itemCount: state.categories.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return CategoryItem(category: state.categories[index]);
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minWidth: constraints.maxWidth,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: state.categories.asMap().entries.map((entry) {
+                          int idx = entry.key;
+                          var category = entry.value;
+                          return Padding(
+                            padding: EdgeInsets.only(
+                              left: idx == 0 ? 24 : 28,
+                              right: idx == state.categories.length - 1
+                                  ? 24
+                                  : 0,
+                            ),
+                            child: CategoryItem(category: category),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  );
                 },
               );
             }
