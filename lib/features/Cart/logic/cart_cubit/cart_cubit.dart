@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modish_store/features/Cart/data/models/cart_model.dart';
 import 'package:modish_store/features/Cart/data/repo/cart_repo.dart';
+
 import 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
@@ -116,8 +117,8 @@ class CartCubit extends Cubit<CartState> {
 
   /// Returns the active [CartModel] from either [CartLoaded] or [CartItemAdded].
   CartModel? get _currentCart => switch (state) {
-        CartLoaded() => (state as CartLoaded).cart,
-        CartItemAdded() => (state as CartItemAdded).cart,
-        _ => null,
-      };
+    CartLoaded() => (state as CartLoaded).cart,
+    CartItemAdded() => (state as CartItemAdded).cart,
+    _ => null,
+  };
 }

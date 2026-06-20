@@ -26,7 +26,9 @@ class PaymentOption extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: isSelected ? kPrimaryColor.withValues(alpha: 0.08) : Colors.white,
+          color: isSelected
+              ? kPrimaryColor.withValues(alpha: 0.08)
+              : Colors.white,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
             color: isSelected ? kPrimaryColor : Colors.transparent,
@@ -52,10 +54,7 @@ class PaymentOption extends StatelessWidget {
             RadioGroup<String>(
               groupValue: groupValue,
               onChanged: onChanged,
-              child: Radio<String>(
-                value: value,
-                activeColor: kPrimaryColor,
-              ),
+              child: Radio<String>(value: value, activeColor: kPrimaryColor),
             ),
           ],
         ),

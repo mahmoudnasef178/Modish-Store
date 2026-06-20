@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:modish_store/core/colors.dart';
 import 'package:modish_store/core/fontstyle.dart';
-import 'package:modish_store/core/utils.dart';
 import 'package:modish_store/features/HomePage/data/models/category/category_model.dart';
 import 'package:modish_store/features/HomePage/presentation/view/products/products_page.dart';
 
