@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:modish_store/features/Cart/data/repo/order_repo.dart';
 import 'package:modish_store/features/Cart/data/repo/cart_repo.dart';
 import 'package:modish_store/features/Cart/data/models/cart_model.dart';
+import 'package:modish_store/features/HomePage/data/models/notification/notification_model.dart';
+import 'package:modish_store/core/services/notification_storage_service.dart';
 import 'checkout_state.dart';
 
 class CheckoutCubit extends Cubit<CheckoutState> {
@@ -43,6 +45,30 @@ class CheckoutCubit extends Cubit<CheckoutState> {
       );
 
       final orderId = orderData['id'] ?? orderData['_id'] ?? '';
+
+      // Save notification locally
+      try {
+        final newNotification = NotificationModel(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          title: 'Order Placed Successfully',
+          message: 'Your order #$orderId has been placed successfully!',
+          timestamp: DateTime.now(),
+          orderId: orderId,
+          totalPrice: cart.totalPrice + 40.90, // including shipping fee
+          shippingAddress: '$address, $city, Egypt',
+          items: cart.cartItems
+              .map((item) => NotificationOrderItem(
+                    productName: item.productName,
+                    quantity: item.quantity,
+                    price: item.price,
+                    productImage: item.productImage,
+                  ))
+              .toList(),
+        );
+        await NotificationStorageService.addNotification(newNotification);
+      } catch (e) {
+        debugPrint('⚠️ Saving notification failed: $e');
+      }
 
       // Send email verification
       final itemsText = cart.cartItems
