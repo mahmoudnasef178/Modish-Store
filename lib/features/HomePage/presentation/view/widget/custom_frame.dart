@@ -14,30 +14,27 @@ class CustomFrame extends StatelessWidget {
   final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            text1,
-            style: t18.copyWith(
-              color: kPrimaryText(context),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          text1,
+          style: t18.copyWith(
+            color: kPrimaryText(context),
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        GestureDetector(
+          onTap: onTap,
+          child: Text(
+            text2,
+            style: t16.copyWith(
+              color: kSecondaryText(context),
               fontWeight: FontWeight.w900,
             ),
           ),
-          GestureDetector(
-            onTap: onTap,
-            child: Text(
-              text2,
-              style: t16.copyWith(
-                color: kSecondaryText(context),
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
